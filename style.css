@@ -1,51 +1,66 @@
 @font-face {
-    font-family: 'RyeCustom';
-    src: url('assets/fonts/rye-regular.ttf') format('truetype'); 
+  font-family: "RyeCustom";
+  src: url("assets/fonts/rye-regular.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'taco';
-    src: url('assets/fonts/taco.ttf') format('truetype'); 
+  font-family: "taco";
+  src: url("assets/fonts/taco.ttf") format("truetype");
 }
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url('assets/img/desert.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    height: 100dvh;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("assets/img/desert.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  height: 100dvh;
 }
 
-h1{
-    font-family: 'taco', Arial, Helvetica, sans-serif;
-    font-size: clamp(1.3rem, calc(3vw + 2rem), 4rem);
-    font-weight: 100;
-    color: rgba(0, 0, 0, 0.8);
-    text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.4);
-    margin: min(2em, 5%) 0 min(2em, 2%) 0;
+h1 {
+  font-family: "taco", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.3rem, calc(3vw + 2rem), 4rem);
+  font-weight: 100;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.4);
+  margin: min(2em, 5%) 0 min(2em, 2%) 0;
+  text-align: center;
 }
 
-canvas{
-    background-color: black;
-    display: block;
+canvas {
+  background: linear-gradient(
+    to bottom,
+  #7a4a67 0%,
+  #e27e5d 35%,
+  #eb8a2f 60%,
+  #fdc151 100%
+  );
+  display: block;
 }
 
 @media only screen and (max-width: 720px) {
-    canvas{
-        width: 100%;
-    }
+  canvas {
+    width: 100%;
+  }
+
+  h1 {
+    display: none;
+  }
 }
 
 @media only screen and (max-height: 480px) {
-    canvas{
-        height: 100vh;
-    }
+  canvas {
+    height: 100vh;
+  }
+
+  h1 {
+    display: none;
+  }
 }
