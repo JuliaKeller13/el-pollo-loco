@@ -37,10 +37,10 @@ h1 {
 canvas {
   background: linear-gradient(
     to bottom,
-  #7a4a67 0%,
-  #e27e5d 35%,
-  #eb8a2f 60%,
-  #fdc151 100%
+  #925a7c 0%,
+  #e18668 35%,
+  #f1c451 60%,
+  #f5bf5a 100%
   );
   display: block;
 }
