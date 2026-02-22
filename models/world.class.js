@@ -26,6 +26,11 @@ class World {
           console.log('collision whith charecter', enemy); 
         }
       });
+      this.level.coins.forEach ((coin) => {
+        if(this.character.isColliding(coin)) {
+          console.log('collision whith charecter', coin); 
+        }
+      });
     }, 200);
   }
 

@@ -26,3 +26,19 @@ function drawBackground() {
   }
   return backgroundObjects;
 }
+
+function addCoins(amount) {
+  let coins = [];
+  for (let i = 0; i < amount; i++) {
+    coins.push(new Coin());
+  }
+  return coins;
+}
+
+function addClouds(amount) {
+  let clouds = [];
+  for (let i = 0; i < amount; i++) {
+    clouds.push(new Cloud());
+  }
+  return clouds;
+}
