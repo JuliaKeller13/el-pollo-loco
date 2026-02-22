@@ -2,7 +2,7 @@ class Level {
     enemies;
     clouds;
     backgroundObjects;
-    levelPosXEnd = 2800;
+    levelPosXEnd = 5100;
 
     constructor(enemies, clouds, backgroundObjects) {
         this.enemies = enemies;
@@ -13,7 +13,7 @@ class Level {
 
 function drawBackground() {
     let backgroundObjects = [];
-    for (let i = -1; i < 5; i++) {
+    for (let i = -1; i < 8; i++) {
       let posX = i * 719;
       let imageNum = (i % 2 === 0) ? 1 : 2;
       backgroundObjects.push(

@@ -1,6 +1,6 @@
 class MovableObject {
   posX = 30;
-  posY = 370;
+  posY = 362;
   height = 260;
   width = 140;
   speed = 0.15;
@@ -10,6 +10,12 @@ class MovableObject {
   imageCache = {};
   currentImage = 0;
   otherDirection = false;
+  offset = {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
 
   loadImage(path) {
     this.img = new Image();
@@ -63,18 +69,31 @@ class MovableObject {
       this instanceof EndBoss
     ) {
       ctx.beginPath();
-      ctx.lineWidth = "5";
+      ctx.lineWidth = "3";
       ctx.strokeStyle = "blue";
       ctx.rect(this.posX, this.posY, this.width, this.height);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.lineWidth = "3";
+      ctx.strokeStyle = "red";
+      ctx.rect(
+        this.posX + this.offset.left,
+        this.posY + this.offset.top,
+        this.width - this.offset.left - this.offset.right,
+        this.height - this.offset.top - this.offset.bottom,
+      );
       ctx.stroke();
     }
   }
 
   isColliding(mo) {
-    return this.posX + this.width > mo.posX &&
-    this.posY + this.height > mo.posY &&
-    this.posX < mo.posX &&
-    this.posY < mo.posY + mo.height
+    return (
+      this.posX + this.width - this.offset.right > mo.posX + mo.offset.left &&
+      this.posY + this.height - this.offset.bottom > mo.posY + mo.offset.top &&
+      this.posX + this.offset.left < mo.posX + mo.width - mo.offset.right &&
+      this.posY + this.offset.top < mo.posY + mo.height - mo.offset.bottom
+    );
   }
 
   constructor() {}
