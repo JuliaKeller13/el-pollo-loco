@@ -38,9 +38,9 @@ canvas {
   background: linear-gradient(
     to bottom,
   #925a7c 0%,
-  #e18668 35%,
-  #f1c451 60%,
-  #f5bf5a 100%
+  #e3a38d 35%,
+  #e0c472 60%,
+  #f3daab 100%
   );
   display: block;
 }

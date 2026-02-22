@@ -1,6 +1,6 @@
 class MovableObject {
   posX = 30;
-  posY = 362;
+  posY = 370;
   height = 260;
   width = 140;
   speed = 0.15;
@@ -31,7 +31,7 @@ class MovableObject {
   }
 
   playAnimation(images) {
-    let i = this.currentImage % this.walkingImages.length;
+    let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
@@ -66,16 +66,18 @@ class MovableObject {
     if (
       this instanceof Character ||
       this instanceof Chicken ||
+      this instanceof SmallChicken ||
+      this instanceof Coin ||
       this instanceof EndBoss
     ) {
       ctx.beginPath();
-      ctx.lineWidth = "3";
+      ctx.lineWidth = "1";
       ctx.strokeStyle = "blue";
       ctx.rect(this.posX, this.posY, this.width, this.height);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.lineWidth = "3";
+      ctx.lineWidth = "";
       ctx.strokeStyle = "red";
       ctx.rect(
         this.posX + this.offset.left,
