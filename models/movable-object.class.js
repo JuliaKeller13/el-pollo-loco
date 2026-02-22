@@ -52,5 +52,30 @@ class MovableObject {
     return this.posY < 130;
   }
 
+  draw(ctx) {
+    ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height);
+  }
+
+  drawFrame(ctx) {
+    if (
+      this instanceof Character ||
+      this instanceof Chicken ||
+      this instanceof EndBoss
+    ) {
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.posX, this.posY, this.width, this.height);
+      ctx.stroke();
+    }
+  }
+
+  isColliding(mo) {
+    return this.posX + this.width > mo.posX &&
+    this.posY + this.height > mo.posY &&
+    this.posX < mo.posX &&
+    this.posY < mo.posY + mo.height
+  }
+
   constructor() {}
 }
