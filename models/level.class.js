@@ -42,3 +42,13 @@ function addClouds(amount) {
   }
   return clouds;
 }
+
+function addEnemies(amount) {
+  let enemies = [];
+  for (let i = 0; i < amount; i++) {
+    enemies.push(new Chicken());
+    enemies.push(new SmallChicken());
+  }
+  enemies.push(new EndBoss());
+  return enemies;
+}
