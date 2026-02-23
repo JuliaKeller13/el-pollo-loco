@@ -4,7 +4,7 @@ class Coin extends MovableObject {
   posY = 70;
   coinImages = [
     "assets/img/8_coin/coin_1.png",
-    "assets/img/8_coin/coin_2.png",
+    "assets/img/8_coin/coin_2.png"
   ];
   offset = {
     top: 47,

@@ -15,7 +15,7 @@ class Character extends MovableObject {
     "assets/img/2_character_pepe/1_idle/idle/I-7.png",
     "assets/img/2_character_pepe/1_idle/idle/I-8.png",
     "assets/img/2_character_pepe/1_idle/idle/I-9.png",
-    "assets/img/2_character_pepe/1_idle/idle/I-10.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-10.png"
   ];
   longIdleImages = [
     "assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
@@ -27,7 +27,7 @@ class Character extends MovableObject {
     "assets/img/2_character_pepe/1_idle/long_idle/I-17.png",
     "assets/img/2_character_pepe/1_idle/long_idle/I-18.png",
     "assets/img/2_character_pepe/1_idle/long_idle/I-19.png",
-    "assets/img/2_character_pepe/1_idle/long_idle/I-20.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-20.png"
   ];
   walkingImages = [
     "assets/img/2_character_pepe/2_walk/W-21.png",
@@ -35,7 +35,7 @@ class Character extends MovableObject {
     "assets/img/2_character_pepe/2_walk/W-23.png",
     "assets/img/2_character_pepe/2_walk/W-24.png",
     "assets/img/2_character_pepe/2_walk/W-25.png",
-    "assets/img/2_character_pepe/2_walk/W-26.png",
+    "assets/img/2_character_pepe/2_walk/W-26.png"
   ];
   jumpingImages = [
     "assets/img/2_character_pepe/3_jump/J-31.png",
@@ -46,21 +46,21 @@ class Character extends MovableObject {
     "assets/img/2_character_pepe/3_jump/J-36.png",
     "assets/img/2_character_pepe/3_jump/J-37.png",
     "assets/img/2_character_pepe/3_jump/J-38.png",
-    "assets/img/2_character_pepe/3_jump/J-39.png",
+    "assets/img/2_character_pepe/3_jump/J-39.png"
   ];
   hurtImages = [
     "assets/img/2_character_pepe/4_hurt/H-41.png",
     "assets/img/2_character_pepe/4_hurt/H-42.png",
-    "assets/img/2_character_pepe/4_hurt/H-43.png",
+    "assets/img/2_character_pepe/4_hurt/H-43.png"
   ];
   deadImages = [
     "assets/img/2_character_pepe/5_dead/D-51.png",
-    'assets/img/2_character_pepe/5_dead/D-52.png',
-    'assets/img/2_character_pepe/5_dead/D-53.png',
-    'assets/img/2_character_pepe/5_dead/D-54.png',
-    'assets/img/2_character_pepe/5_dead/D-55.png',
-    'assets/img/2_character_pepe/5_dead/D-56.png',
-    'assets/img/2_character_pepe/5_dead/D-57.png',
+    "assets/img/2_character_pepe/5_dead/D-52.png",
+    "assets/img/2_character_pepe/5_dead/D-53.png",
+    "assets/img/2_character_pepe/5_dead/D-54.png",
+    "assets/img/2_character_pepe/5_dead/D-55.png",
+    "assets/img/2_character_pepe/5_dead/D-56.png",
+    "assets/img/2_character_pepe/5_dead/D-57.png"
   ];
   world;
   offset = {
@@ -103,7 +103,13 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isAboveGround()) {
+      // if (this.isDead()) {
+      //   this.playAnimation(this.deadImages);
+      //   //deadanimation untebrechen
+      // } else 
+      if (this.isHurt()) {
+        this.playAnimation(this.hurtImages);
+      } else if (this.isAboveGround()) {
         this.jumpAnimation();
       } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
         this.playAnimation(this.walkingImages);
@@ -137,7 +143,6 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-
     if (this.idleTimer > 8000 && this.idleCounter % 4 == 0) {
       this.playAnimation(this.longIdleImages);
     } else if (this.idleCounter % 4 == 0) {

@@ -21,14 +21,13 @@ class World {
 
   checkCollisions() {
     setInterval(() => {
-      this.level.enemies.forEach ((enemy) => {
-        if(this.character.isColliding(enemy)) {
-          console.log('collision whith charecter', enemy); 
+      this.level.enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy)) {
+          this.character.hit();
         }
       });
-      this.level.coins.forEach ((coin) => {
-        if(this.character.isColliding(coin)) {
-          console.log('collision whith charecter', coin); 
+      this.level.coins.forEach((coin) => {
+        if (this.character.isColliding(coin)) {
         }
       });
     }, 200);
@@ -82,5 +81,4 @@ class World {
     mo.posX = mo.posX / -1;
     this.ctx.restore();
   }
-
 }
