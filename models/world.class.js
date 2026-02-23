@@ -5,6 +5,7 @@ class World {
   ctx;
   keyboard;
   cameraX = 0;
+  statusBar = new StatusBar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -42,6 +43,7 @@ class World {
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addToMap(this.character);
+    this.addToMap(this.statusBar);
 
     this.ctx.translate(-this.cameraX, 0);
 
@@ -63,7 +65,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx); //
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
