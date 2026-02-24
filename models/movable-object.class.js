@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.health -= 20;
+    this.health -= 10;
     console.log("collision whith charecter", this.health);
     if (this.health < 0) {
       this.health = 0;

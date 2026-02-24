@@ -87,6 +87,7 @@ class Character extends MovableObject {
       if (this.isDead()) {
         if (!this.isAnimationFinished) {
           this.speedY = 20;
+          playSound(gameSounds.characterDead);
           this.isAnimationFinished = true;
         }
         return;
@@ -106,6 +107,7 @@ class Character extends MovableObject {
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        playSound(gameSounds.characterJump);
       }
 
       this.world.cameraX = -this.posX + 100;

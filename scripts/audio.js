@@ -1,0 +1,24 @@
+const gameSounds = {
+    // background: new Audio(''),
+    characterDamage: new Audio('assets/audio/sounds/character/characterDamage.mp3'),
+    characterDead: new Audio('assets/audio/sounds/character/characterDead.wav'),
+    characterJump: new Audio('assets/audio/sounds/character/characterJump.wav'),
+    characterRun: new Audio('assets/audio/sounds/character/characterRun.mp3'),
+    characterSnoring: new Audio('assets/audio/sounds/character/characterSnoring.mp3'),
+
+    chickenDead: new Audio('assets/audio/sounds/chicken/chickenDead.mp3'),
+    chickenDead2: new Audio('assets/audio/sounds/chicken/chickenDead2.mp3'),
+
+    bottlebrake: new Audio('assets/audio/sounds/throwable/bottleBreak.mp3'),
+    bottleCollectSound: new Audio('assets/audio/sounds/collectibles/bottleCollectSound.wav'),
+    collectSound: new Audio('assets/audio/sounds/collectibles/collectSound.wav'),
+
+    endbossApproach: new Audio('assets/audio/sounds/endboss/endbossApproach.mp3'),
+
+    gameStart: new Audio('assets/audio/sounds/game/gameStart.mp3')
+}
+
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
+}

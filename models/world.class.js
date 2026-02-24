@@ -30,16 +30,18 @@ class World {
         if (this.character.isColliding(enemy)) {
           this.character.hit();
           this.statusBarHealth.setPerscentage(this.character.health);
+          playSound(gameSounds.characterDamage);
         }
       });
       this.level.coins.forEach((coin, coinIndex) => {
         if (this.character.isColliding(coin)) {
           this.level.coins.splice(coinIndex, 1);
-
-          //coins amount increace (this.character.collectedCoins += 1;)
+          this.character.collectedCoins += 1;
+          this.statusBarCoin.setPerscentage(this.character.collectedCoins);
+          playSound(gameSounds.collectSound);
         }
       });
-    }, 100);
+    }, 200);
   }
 
   draw() {
