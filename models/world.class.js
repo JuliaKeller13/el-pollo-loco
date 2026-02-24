@@ -32,11 +32,14 @@ class World {
           this.statusBarHealth.setPerscentage(this.character.health);
         }
       });
-      this.level.coins.forEach((coin) => {
+      this.level.coins.forEach((coin, coinIndex) => {
         if (this.character.isColliding(coin)) {
+          this.level.coins.splice(coinIndex, 1);
+
+          //coins amount increace (this.character.collectedCoins += 1;)
         }
       });
-    }, 200);
+    }, 100);
   }
 
   draw() {

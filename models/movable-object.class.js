@@ -11,12 +11,22 @@ class MovableObject extends DrawableObject {
   };
   health = 100;
   lastHit = 0;
+  isAnimationFinished = false;
+  deadImgIndex = 0;
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
+  }
+
+  playAnimationOnce(images) {
+    if (this.deadImgIndex < images.length) {
+      let path = images[this.deadImgIndex];
+      this.img = this.imageCache[path];
+      this.deadImgIndex++;
+    }
   }
 
   moveRight() {
@@ -37,6 +47,9 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
+    if (this.isDead()) {
+      return true;
+    }
     return this.posY < 130;
   }
 
