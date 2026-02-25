@@ -1,14 +1,16 @@
 class Level {
     enemies;
     coins;
+    bottles;
     clouds;
     backgroundObjects;
     levelPosXEnd = 5100;
 
-    constructor(enemies, clouds, coins, backgroundObjects) {
+    constructor(enemies, clouds, coins, bottles, backgroundObjects) {
         this.enemies = enemies;
         this.clouds = clouds;
         this.coins = coins;
+        this.bottles = bottles;
         this.backgroundObjects = backgroundObjects;
     }
 }
@@ -33,6 +35,14 @@ function addCoins(amount) {
     coins.push(new Coin());
   }
   return coins;
+}
+
+function addBottles(amount) {
+  let bottles = [];
+  for (let i = 0; i < amount; i++) {
+    bottles.push(new Bottle());
+  }
+  return bottles;
 }
 
 function addClouds(amount) {

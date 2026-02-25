@@ -69,6 +69,8 @@ class Character extends MovableObject {
     right: 40,
     bottom: 12,
   };
+  collectedCoins = 0;
+  collectedBottles = 0;
 
   constructor() {
     super().loadImage("assets/img/2_character_pepe/1_idle/idle/I-1.png");
@@ -84,7 +86,15 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
+      let isMoving = (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround();
+      if (isMoving) {
+        playSound(gameSounds.characterRun);
+      } else {
+        pauseSound(gameSounds.characterRun);
+      }
+
       if (this.isDead()) {
+        pauseSound(gameSounds.characterDamage);
         if (!this.isAnimationFinished) {
           this.speedY = 20;
           playSound(gameSounds.characterDead);
@@ -94,10 +104,7 @@ class Character extends MovableObject {
       }
       this.checkLongIdle();
 
-      if (
-        this.world.keyboard.RIGHT &&
-        this.posX < this.world.level.levelPosXEnd
-      ) {
+      if (this.world.keyboard.RIGHT && this.posX < this.world.level.levelPosXEnd) {
         this.moveRight();
         this.otherDirection = false;
       }
@@ -152,8 +159,9 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 8000 && this.idleCounter % 4 == 0) {
+    if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) {
       this.playAnimation(this.longIdleImages);
+      playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {
       this.playAnimation(this.idleImages);
     }

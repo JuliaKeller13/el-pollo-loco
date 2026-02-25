@@ -9,7 +9,7 @@ class World {
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
   statusBarEndbossHealth = new StatusBarEndbossHealth();
-
+  bottle = new Bottle();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -37,8 +37,16 @@ class World {
         if (this.character.isColliding(coin)) {
           this.level.coins.splice(coinIndex, 1);
           this.character.collectedCoins += 1;
-          this.statusBarCoin.setPerscentage(this.character.collectedCoins);
-          playSound(gameSounds.collectSound);
+          this.statusBarCoin.setPerscentage((this.character.collectedCoins / (this.character.collectedCoins + this.level.coins.length)) * 100);
+          playSoundOften(gameSounds.collectSound);
+        }
+      });
+      this.level.bottles.forEach((bottle, bottleIndex) => {
+        if (this.character.isColliding(bottle)) {
+          this.level.bottles.splice(bottleIndex, 1);
+          this.character.collectedBottles += 1;
+          this.statusBarBottle.setPerscentage((this.character.collectedBottles / (this.character.collectedBottles + this.level.bottles.length)) * 100);
+          playSoundOften(gameSounds.bottleCollectSound);
         }
       });
     }, 200);
@@ -49,6 +57,7 @@ class World {
     this.ctx.translate(this.cameraX, 0);
     this.addObjectsToMap(this.level.backgroundObjects);    
     this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.bottles);
 
     this.ctx.translate(-this.cameraX, 0);
     // ------ Space for fixed objects ------
@@ -56,6 +65,8 @@ class World {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusBarEndbossHealth);
+    this.drawCoinsAmount();
+    this.drawBottlesAmount();
     this.ctx.translate(this.cameraX, 0);
 
     
@@ -71,6 +82,20 @@ class World {
     });
   }
 
+  drawCoinsAmount(){
+    this.ctx.font = "19px Arial";
+    this.ctx.fillStyle = "white";
+    let coins = this.character.collectedCoins;
+    this.ctx.fillText(`${coins}/${totalCoins}`, 180, 77);
+  }
+
+  drawBottlesAmount(){
+    this.ctx.font = "19px Arial";
+    this.ctx.fillStyle = "white";
+    let bottles = this.character.collectedBottles;
+    this.ctx.fillText(`${bottles}/${totalBottles}`, 180, 116);
+  }
+
   addObjectsToMap(objects) {
     objects.forEach((objekt) => {
       this.addToMap(objekt);
@@ -83,7 +108,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx); //
+    // mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

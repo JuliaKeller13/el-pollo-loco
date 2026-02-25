@@ -10,6 +10,6 @@ class StatusBarCoin extends StatusBar {
     ];
     super(imgs);
     this.posY = 40;
-    this.setPerscentage(20);
+    this.setPerscentage(0);
   }
 }

@@ -26,13 +26,14 @@ class DrawableObject {
     ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height);
   }
 
-    drawFrame(ctx) {
+  drawFrame(ctx) {
     if (
       this instanceof Character ||
       this instanceof Chicken ||
       this instanceof SmallChicken ||
       this instanceof Coin ||
-      this instanceof EndBoss
+      this instanceof EndBoss ||
+      this instanceof Bottle
     ) {
       ctx.beginPath();
       ctx.lineWidth = "1";
