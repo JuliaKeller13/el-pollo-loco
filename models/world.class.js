@@ -28,16 +28,28 @@ class World {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
-          this.character.hit();
-          this.statusBarHealth.setPerscentage(this.character.health);
-          playSound(gameSounds.characterDamage);
+          if (this.character.speedY < 0 && this.character.isAboveGround()) {
+            enemy.health = 0;
+          } else {
+            if (!enemy.isDead()){
+            this.character.hit();
+            this.statusBarHealth.setPerscentage(this.character.health);
+            playSound(gameSounds.characterDamage);
+          }
+          }
+            
         }
       });
+
       this.level.coins.forEach((coin, coinIndex) => {
         if (this.character.isColliding(coin)) {
           this.level.coins.splice(coinIndex, 1);
           this.character.collectedCoins += 1;
-          this.statusBarCoin.setPerscentage((this.character.collectedCoins / (this.character.collectedCoins + this.level.coins.length)) * 100);
+          this.statusBarCoin.setPerscentage(
+            (this.character.collectedCoins /
+              (this.character.collectedCoins + this.level.coins.length)) *
+              100,
+          );
           playSoundOften(gameSounds.collectSound);
         }
       });
@@ -45,17 +57,21 @@ class World {
         if (this.character.isColliding(bottle)) {
           this.level.bottles.splice(bottleIndex, 1);
           this.character.collectedBottles += 1;
-          this.statusBarBottle.setPerscentage((this.character.collectedBottles / (this.character.collectedBottles + this.level.bottles.length)) * 100);
+          this.statusBarBottle.setPerscentage(
+            (this.character.collectedBottles /
+              (this.character.collectedBottles + this.level.bottles.length)) *
+              100,
+          );
           playSoundOften(gameSounds.bottleCollectSound);
         }
       });
-    }, 200);
+    }, 50);
   }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.cameraX, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);    
+    this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.bottles);
 
@@ -69,7 +85,6 @@ class World {
     this.drawBottlesAmount();
     this.ctx.translate(this.cameraX, 0);
 
-    
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addToMap(this.character);
@@ -82,14 +97,14 @@ class World {
     });
   }
 
-  drawCoinsAmount(){
+  drawCoinsAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";
     let coins = this.character.collectedCoins;
     this.ctx.fillText(`${coins}/${totalCoins}`, 180, 77);
   }
 
-  drawBottlesAmount(){
+  drawBottlesAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";
     let bottles = this.character.collectedBottles;
@@ -108,7 +123,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
+    mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
