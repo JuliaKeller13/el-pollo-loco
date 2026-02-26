@@ -64,10 +64,10 @@ class Character extends MovableObject {
   
   world;
   offset = {
-    top: 120,
-    left: 28,
-    right: 40,
-    bottom: 12,
+    top: 135,
+    left: 35,
+    right: 50,
+    bottom: 20,
   };
   collectedCoins = 0;
   collectedBottles = 0;
@@ -179,4 +179,6 @@ class Character extends MovableObject {
       this.idleTimer += 1000 / 60;
     }
   }
+
+
 }
