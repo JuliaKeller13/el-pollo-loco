@@ -1,7 +1,7 @@
 class MovableObject extends DrawableObject {
   speed = 0.15;
   speedY = 0;
-  acceleration = 2;
+  acceleration = 3;
   otherDirection = false;
   offset = {
     top: 0,
@@ -37,7 +37,7 @@ class MovableObject extends DrawableObject {
     this.posX -= this.speed;
   }
 
-  aplyGravity() {
+  applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.posY -= this.speedY;
@@ -47,10 +47,10 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    if (this.isDead()) {
+    if (this.isDead() || this instanceof Bottle) {
       return true;
     }
-    return this.posY < 130;
+    return this.posY < 133;
   }
 
   isColliding(mo) {

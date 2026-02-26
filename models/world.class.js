@@ -10,6 +10,7 @@ class World {
   statusBarBottle = new StatusBarBottle();
   statusBarEndbossHealth = new StatusBarEndbossHealth();
   bottle = new Bottle();
+  throwableObjects = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -17,62 +18,105 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.checkCollisions();
+    this.run();
   }
 
   setWorld() {
     this.character.world = this;
   }
 
-  checkCollisions() {
+  run() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy, enemyIndex) => {
-        if (this.character.isColliding(enemy)) {
-          if (this.character.speedY < 0 && this.character.isAboveGround() && !(enemy instanceof EndBoss)) {
-            this.killChicken(enemy, enemyIndex);
-          } else {
-            if (!enemy.isDead() && !this.character.isHurt()){
+      this.checkCollisions();
+      this.checkThrowableObjects();
+    }, 50);
+  }
+
+  checkThrowableObjects() {
+    if (this.keyboard.C && this.character.collectedBottles > 0) {
+      let bottle = new ThrowableObject(
+        this.character.posX,
+        this.character.posY,
+      );
+      this.throwableObjects.push(bottle);
+      console.log("c gedrückt");
+
+      this.character.collectedBottles--;
+      // this.statusBarBottle.setPerscentage(
+      //   (this.character.collectedBottles /
+      //     (this.character.collectedBottles + this.level.bottles.length)) *
+      //     100,
+      // ); //nicht richtig, beim weggwerfen.
+    }
+  }
+
+  checkCollisions() {
+    this.collosionsWithEnemies();
+    this.collosionsWithCoins();
+    this.collosionsWithBottles();
+  }
+
+  collosionsWithEnemies() {
+    this.level.enemies.forEach((enemy, enemyIndex) => {
+      if (this.character.isColliding(enemy)) {
+        if (
+          this.character.speedY < 0 &&
+          this.character.isAboveGround() &&
+          !(enemy instanceof EndBoss)
+        ) {
+          this.killChicken(enemy, enemyIndex);
+        } else {
+          if (!enemy.isDead() && !this.character.isHurt()) {
             this.character.hit();
             this.statusBarHealth.setPerscentage(this.character.health);
             playSound(gameSounds.characterDamage);
           }
-          }
         }
-      });
+      }
+    });
+  }
 
-      this.level.coins.forEach((coin, coinIndex) => {
-        if (this.character.isColliding(coin)) {
-          this.level.coins.splice(coinIndex, 1);
-          this.character.collectedCoins += 1;
-          this.statusBarCoin.setPerscentage(
-            (this.character.collectedCoins /
-              (this.character.collectedCoins + this.level.coins.length)) *
-              100,
-          );
-          playSoundOften(gameSounds.collectSound);
-        }
-      });
-      this.level.bottles.forEach((bottle, bottleIndex) => {
-        if (this.character.isColliding(bottle)) {
-          this.level.bottles.splice(bottleIndex, 1);
-          this.character.collectedBottles += 1;
-          this.statusBarBottle.setPerscentage(
-            (this.character.collectedBottles /
-              (this.character.collectedBottles + this.level.bottles.length)) *
-              100,
-          );
-          playSoundOften(gameSounds.bottleCollectSound);
-        }
-      });
-    }, 50);
+  collosionsWithCoins() {
+    this.level.coins.forEach((coin, coinIndex) => {
+      if (this.character.isColliding(coin)) {
+        this.level.coins.splice(coinIndex, 1);
+        this.character.collectedCoins += 1;
+        this.statusBarCoin.setPerscentage(
+          (this.character.collectedCoins /
+            (this.character.collectedCoins + this.level.coins.length)) *
+            100,
+        );
+        playSoundOften(gameSounds.collectSound);
+      }
+    });
+  }
+
+  collosionsWithBottles() {
+    this.level.bottles.forEach((bottle, bottleIndex) => {
+      if (this.character.isColliding(bottle)) {
+        this.level.bottles.splice(bottleIndex, 1);
+        this.character.collectedBottles += 1;
+        this.statusBarBottle.setPerscentage(
+          (this.character.collectedBottles /
+            (this.character.collectedBottles + this.level.bottles.length)) *
+            100,
+        );
+        playSoundOften(gameSounds.bottleCollectSound);
+      }
+    });
   }
 
   killChicken(enemy, enemyIndex) {
-    enemy.health = 0;
-    playSound(gameSounds.chickenDead);
-    setTimeout(() => {
-      this.level.enemies.splice(enemyIndex, 1);
-    }, 2000);
+    if (enemy.health > 0) {
+      enemy.health = 0;
+      this.character.speedY = 18;
+      playSound(
+        chickenDeadSounds[Math.floor(Math.random() * chickenDeadSounds.length)],
+      );
+      setTimeout(() => {
+        this.level.enemies.splice(enemyIndex, 1);
+      }, 500);
+    }
   }
 
   draw() {
@@ -94,6 +138,7 @@ class World {
 
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.throwableObjects);
     this.addToMap(this.character);
 
     this.ctx.translate(-this.cameraX, 0);
@@ -128,10 +173,8 @@ class World {
     if (mo.otherDirection) {
       this.flipImage(mo);
     }
-
     mo.draw(this.ctx);
     // mo.drawFrame(this.ctx);
-
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

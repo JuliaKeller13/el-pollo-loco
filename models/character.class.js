@@ -3,7 +3,7 @@ class Character extends MovableObject {
   posY = 133;
   height = 300;
   width = 150;
-  speed = 10;
+  speed = 12;
   idleTimer = 0;
   idleImages = [
     "assets/img/2_character_pepe/1_idle/idle/I-1.png",
@@ -65,7 +65,7 @@ class Character extends MovableObject {
   world;
   offset = {
     top: 135,
-    left: 35,
+    left: 50,
     right: 50,
     bottom: 15,
   };
@@ -81,7 +81,7 @@ class Character extends MovableObject {
     this.loadImages(this.hurtImages);
     this.loadImages(this.deadImages);
     this.animate();
-    this.aplyGravity();
+    this.applyGravity();
   }
 
   animate() {
@@ -114,8 +114,8 @@ class Character extends MovableObject {
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        playSound(gameSounds.characterJump);
       }
+      
 
       this.world.cameraX = -this.posX + 100;
     }, 1000 / 60);
@@ -135,8 +135,16 @@ class Character extends MovableObject {
     }, 80);
   }
 
+  // throwBottle() {
+  //   if (this.collectedBottles > 0) {
+  //     this.throw()
+  //     this.collectedBottles--;
+  //   }
+  // }
+
   jump() {
-    this.speedY = 23;
+    this.speedY = 30;
+    playSound(gameSounds.characterJump);
   }
 
   jumpAnimation() {
@@ -159,7 +167,7 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 500000 && this.idleCounter % 4 == 0) {
+    if (this.idleTimer > 500000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
       this.playAnimation(this.longIdleImages);
       playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {

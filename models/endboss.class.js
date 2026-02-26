@@ -53,7 +53,7 @@ class EndBoss extends MovableObject {
     this.loadImages(this.attackImages);
     this.loadImages(this.hurtImages);
     this.loadImages(this.deadImages);
-    this.posX = 4800;
+    this.posX = 8800;
     this.animate();
   }
 

@@ -4,7 +4,7 @@ class Level {
     bottles;
     clouds;
     backgroundObjects;
-    levelPosXEnd = 5100;
+    levelPosXEnd = 9100;
 
     constructor(enemies, clouds, coins, bottles, backgroundObjects) {
         this.enemies = enemies;
@@ -17,7 +17,7 @@ class Level {
 
 function drawBackground() {
     let backgroundObjects = [];
-    for (let i = -1; i < 8; i++) {
+    for (let i = -1; i < 14; i++) {
       let posX = i * 719;
       let imageNum = (i % 2 === 0) ? 1 : 2;
       backgroundObjects.push(

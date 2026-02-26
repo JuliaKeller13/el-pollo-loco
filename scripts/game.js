@@ -12,6 +12,9 @@ document.addEventListener("keydown", (event) => {
     case " ":
       keyboard.SPACE = true;
       break;
+    case "c":
+      keyboard.C = true;
+      break;
     case "ArrowLeft":
       keyboard.LEFT = true;
       break;
@@ -31,6 +34,9 @@ document.addEventListener("keyup", (event) => {
   switch (event.key) {
     case " ":
       keyboard.SPACE = false;
+      break;
+    case "c":
+      keyboard.C = false;
       break;
     case "ArrowLeft":
       keyboard.LEFT = false;

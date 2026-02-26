@@ -1,5 +1,6 @@
 class StatusBarCoin extends StatusBar {
   constructor() {
+      
     const imgs = [
       "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png",
       "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png",
@@ -10,6 +11,5 @@ class StatusBarCoin extends StatusBar {
     ];
     super(imgs);
     this.posY = 40;
-    this.setPerscentage(0);
-  }
+    this.setPerscentage(0);  }
 }
