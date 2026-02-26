@@ -179,6 +179,4 @@ class Character extends MovableObject {
       this.idleTimer += 1000 / 60;
     }
   }
-
-
 }

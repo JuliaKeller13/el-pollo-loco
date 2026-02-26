@@ -26,18 +26,17 @@ class World {
 
   checkCollisions() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
+      this.level.enemies.forEach((enemy, enemyIndex) => {
         if (this.character.isColliding(enemy)) {
-          if (this.character.speedY < 0 && this.character.isAboveGround()) {
-            enemy.health = 0;
+          if (this.character.speedY < 0 && this.character.isAboveGround() && !(enemy instanceof EndBoss)) {
+            this.killChicken(enemy, enemyIndex);
           } else {
-            if (!enemy.isDead()){
+            if (!enemy.isDead() && !this.character.isHurt()){
             this.character.hit();
             this.statusBarHealth.setPerscentage(this.character.health);
             playSound(gameSounds.characterDamage);
           }
           }
-            
         }
       });
 
@@ -66,6 +65,14 @@ class World {
         }
       });
     }, 50);
+  }
+
+  killChicken(enemy, enemyIndex) {
+    enemy.health = 0;
+    playSound(gameSounds.chickenDead);
+    setTimeout(() => {
+      this.level.enemies.splice(enemyIndex, 1);
+    }, 2000);
   }
 
   draw() {
@@ -123,7 +130,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
