@@ -11,6 +11,8 @@ class World {
   statusBarEndbossHealth = new StatusBarEndbossHealth();
   bottle = new Bottle();
   throwableObjects = [];
+  throwCooldown = 500;
+  lastThrow = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -33,14 +35,18 @@ class World {
   }
 
   checkThrowableObjects() {
-    if (this.keyboard.C && this.character.collectedBottles > 0) {
+    const now = new Date().getTime();
+    if (
+      this.keyboard.C &&
+      this.character.collectedBottles > 0 &&
+      now - this.lastThrow > this.throwCooldown
+    ) {
+      this.lastThrow = now;
       let bottle = new ThrowableObject(
         this.character.posX,
         this.character.posY,
       );
       this.throwableObjects.push(bottle);
-      console.log("c gedrückt");
-
       this.character.collectedBottles--;
       // this.statusBarBottle.setPerscentage(
       //   (this.character.collectedBottles /

@@ -70,7 +70,7 @@ class Character extends MovableObject {
     bottom: 15,
   };
   collectedCoins = 0;
-  collectedBottles = 0;
+  collectedBottles = 10;
 
   constructor() {
     super().loadImage("assets/img/2_character_pepe/1_idle/idle/I-1.png");
