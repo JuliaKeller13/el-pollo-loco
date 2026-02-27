@@ -1,14 +1,17 @@
 class EndBoss extends MovableObject {
+  health = 60;
+  maxHealth = 60;
   height = 250;
   width = 200;
   speed = 10;
   posY = 185;
   offset = {
-    top: 45,
+    top: 50,
     left: 5,
     right: 5,
     bottom: 10,
   };
+
   walkingImages = [
     "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
     "assets/img/4_enemie_boss_chicken/1_walk/G2.png",

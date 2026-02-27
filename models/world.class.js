@@ -38,6 +38,7 @@ class World {
     this.collosionsWithEnemies();
     this.collosionsWithCoins();
     this.collosionsWithBottles();
+    this.checkCollThrowObj();
   }
 
   collosionsWithEnemies() {
@@ -104,6 +105,27 @@ class World {
       this.statusBarBottle.setPerscentage(
         (this.character.collectedBottles / (this.character.collectedCoins + this.level.coins.length)) * 100);
     }
+  }
+
+  checkCollThrowObj() {
+    this.throwableObjects.forEach((bottle, bottleIndex) => {
+      this.level.enemies.forEach((enemy, enemyIndex) => {
+        if (bottle.isColliding(enemy)) {
+          if (enemy instanceof EndBoss) {
+            enemy.hit();
+            let pct = (enemy.health / enemy.maxHealth) * 100;
+            this.statusBarEndbossHealth.setPerscentage(pct);
+          } else {
+            this.killChicken(enemy, enemyIndex);
+          }
+          this.throwableObjects.splice(bottleIndex, 1);
+        }
+      });
+      if (bottle.posY > 350) {
+        this.throwableObjects.splice(bottleIndex, 1);
+        //splach animation hinzufügen
+      }
+    });
   }
 
   killChicken(enemy, enemyIndex) {

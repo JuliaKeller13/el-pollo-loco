@@ -135,13 +135,6 @@ class Character extends MovableObject {
     }, 80);
   }
 
-  // throwBottle() {
-  //   if (this.collectedBottles > 0) {
-  //     this.throw()
-  //     this.collectedBottles--;
-  //   }
-  // }
-
   jump() {
     this.speedY = 30;
     playSound(gameSounds.characterJump);
@@ -167,7 +160,7 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 500000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
+    if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
       this.playAnimation(this.longIdleImages);
       playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {
