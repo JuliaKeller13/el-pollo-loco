@@ -34,28 +34,6 @@ class World {
     }, 50);
   }
 
-  checkThrowableObjects() {
-    const now = new Date().getTime();
-    if (
-      this.keyboard.C &&
-      this.character.collectedBottles > 0 &&
-      now - this.lastThrow > this.throwCooldown
-    ) {
-      this.lastThrow = now;
-      let bottle = new ThrowableObject(
-        this.character.posX,
-        this.character.posY,
-      );
-      this.throwableObjects.push(bottle);
-      this.character.collectedBottles--;
-      // this.statusBarBottle.setPerscentage(
-      //   (this.character.collectedBottles /
-      //     (this.character.collectedBottles + this.level.bottles.length)) *
-      //     100,
-      // ); //nicht richtig, beim weggwerfen.
-    }
-  }
-
   checkCollisions() {
     this.collosionsWithEnemies();
     this.collosionsWithCoins();
@@ -97,19 +75,35 @@ class World {
     });
   }
 
-  collosionsWithBottles() {
+    collosionsWithBottles() {
     this.level.bottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.bottles.splice(bottleIndex, 1);
         this.character.collectedBottles += 1;
         this.statusBarBottle.setPerscentage(
-          (this.character.collectedBottles /
-            (this.character.collectedBottles + this.level.bottles.length)) *
-            100,
-        );
+        (this.character.collectedBottles / (this.character.collectedCoins + this.level.coins.length)) * 100);
         playSoundOften(gameSounds.bottleCollectSound);
       }
     });
+  }
+  
+  checkThrowableObjects() {
+    const now = new Date().getTime();
+    if (
+      this.keyboard.C &&
+      this.character.collectedBottles > 0 &&
+      now - this.lastThrow > this.throwCooldown
+    ) {
+      this.lastThrow = now;
+      let bottle = new ThrowableObject(
+        this.character.posX,
+        this.character.posY,
+      );
+      this.throwableObjects.push(bottle);
+      this.character.collectedBottles--;
+      this.statusBarBottle.setPerscentage(
+        (this.character.collectedBottles / (this.character.collectedCoins + this.level.coins.length)) * 100);
+    }
   }
 
   killChicken(enemy, enemyIndex) {

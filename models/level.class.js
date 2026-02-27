@@ -13,6 +13,7 @@ class Level {
         this.bottles = bottles;
         this.backgroundObjects = backgroundObjects;
     }
+
 }
 
 function drawBackground() {

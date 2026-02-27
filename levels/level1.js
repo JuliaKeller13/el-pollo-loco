@@ -6,5 +6,5 @@ const level1 = new Level(
     drawBackground()
 );
 
-totalCoins = 30; // Münzen die Character schon hat + die, die er noch sammeln kann
+totalCoins = 30; // später soll gezeigt werde ... Münzen die Character schon hat + die, die er noch sammeln kann
 totalBottles = 35; //statisch, später eventuell dynamisch, Anzahl Flaschen im Level + gesammelten Flaschen des Charakters
