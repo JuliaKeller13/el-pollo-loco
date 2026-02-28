@@ -62,6 +62,7 @@ class World {
     return (
       this.character.speedY < 0 &&
       this.character.isAboveGround() &&
+      this.character.health > 0 &&
       !(enemy instanceof EndBoss)
     );
   }
@@ -108,23 +109,41 @@ class World {
 
   checkCollThrowObj() {
     this.throwableObjects.forEach((bottle, bottleIndex) => {
+      if (bottle.splashing) return;
+
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy)) {
           this.enemyHit(enemy, enemyIndex);
-          this.throwableObjects.splice(bottleIndex, 1);
+          this.brokeBottle(bottle);
         }
       });
-      if (bottle.posY > 350) {
-        this.throwableObjects.splice(bottleIndex, 1);
-        //splach animation hinzufügen
+
+      if (bottle.posY > 353) {
+        this.brokeBottle(bottle, bottleIndex);
       }
     });
   }
 
+  brokeBottle(bottle) {
+    bottle.splash();
+    playSoundOften(gameSounds.bottlebrake);
+    setTimeout(() => {
+      let currentIndex = this.throwableObjects.indexOf(bottle);
+      if (currentIndex > -1) {
+        this.throwableObjects.splice(currentIndex, 1);
+      }
+    }, 500);
+  }
+
   enemyHit(enemy, enemyIndex) {
     if (enemy instanceof EndBoss) {
-      enemy.hit();
-      this.updateStatusbars(enemy);
+      if (enemy.health > 0) {
+        enemy.hit();
+        playSound(chickenDead[Math.floor(Math.random() * chickenDead.length)]);
+        this.updateStatusbars(enemy);
+      } else {
+        //tot endboss
+      }
     } else {
       this.killChicken(enemy, enemyIndex);
     }
@@ -141,8 +160,14 @@ class World {
   }
 
   updateStatusbars(enemy) {
-    this.statusBarCoin.setPercentage(this.character.collectedCoins, this.level.maxCoins);
-    this.statusBarBottle.setPercentage(this.character.collectedBottles, this.level.maxBottles);
+    this.statusBarCoin.setPercentage(
+      this.character.collectedCoins,
+      this.level.maxCoins,
+    );
+    this.statusBarBottle.setPercentage(
+      this.character.collectedBottles,
+      this.level.maxBottles,
+    );
     this.statusBarHealth.setPercentage(this.character.health);
     if (enemy instanceof EndBoss) {
       this.statusBarEndbossHealth.setPercentage(enemy.health, enemy.maxHealth);
@@ -204,7 +229,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

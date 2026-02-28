@@ -65,8 +65,8 @@ class Character extends MovableObject {
   world;
   offset = {
     top: 135,
-    left: 40,
-    right: 40,
+    left: 50,
+    right: 60,
     bottom: 15,
   };
   collectedCoins = 0;

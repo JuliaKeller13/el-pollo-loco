@@ -6,10 +6,10 @@ class EndBoss extends MovableObject {
   speed = 10;
   posY = 185;
   offset = {
-    top: 50,
-    left: 5,
-    right: 5,
-    bottom: 10,
+    top: 80,
+    left: 40,
+    right: 25,
+    bottom: 60,
   };
 
   walkingImages = [
