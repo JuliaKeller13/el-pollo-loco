@@ -44,21 +44,26 @@ class World {
   collosionsWithEnemies() {
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
-        if (
-          this.character.speedY < 0 &&
-          this.character.isAboveGround() &&
-          !(enemy instanceof EndBoss)
-        ) {
+        if (!enemy.isDead() && this.checkJump(enemy)) {
           this.killChicken(enemy, enemyIndex);
+          this.character.speedY = 18;
         } else {
           if (!enemy.isDead() && !this.character.isHurt()) {
             this.character.hit();
-            this.statusBarHealth.setPerscentage(this.character.health);
             playSound(gameSounds.characterDamage);
+            this.updateStatusbars();
           }
         }
       }
     });
+  }
+
+  checkJump(enemy) {
+    return (
+      this.character.speedY < 0 &&
+      this.character.isAboveGround() &&
+      !(enemy instanceof EndBoss)
+    );
   }
 
   collosionsWithCoins() {
@@ -66,28 +71,23 @@ class World {
       if (this.character.isColliding(coin)) {
         this.level.coins.splice(coinIndex, 1);
         this.character.collectedCoins += 1;
-        this.statusBarCoin.setPerscentage(
-          (this.character.collectedCoins /
-            (this.character.collectedCoins + this.level.coins.length)) *
-            100,
-        );
+        this.updateStatusbars();
         playSoundOften(gameSounds.collectSound);
       }
     });
   }
 
-    collosionsWithBottles() {
+  collosionsWithBottles() {
     this.level.bottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.bottles.splice(bottleIndex, 1);
         this.character.collectedBottles += 1;
-        this.statusBarBottle.setPerscentage(
-        (this.character.collectedBottles / (this.character.collectedCoins + this.level.coins.length)) * 100);
+        this.updateStatusbars();
         playSoundOften(gameSounds.bottleCollectSound);
       }
     });
   }
-  
+
   checkThrowableObjects() {
     const now = new Date().getTime();
     if (
@@ -102,8 +102,7 @@ class World {
       );
       this.throwableObjects.push(bottle);
       this.character.collectedBottles--;
-      this.statusBarBottle.setPerscentage(
-        (this.character.collectedBottles / (this.character.collectedCoins + this.level.coins.length)) * 100);
+      this.updateStatusbars();
     }
   }
 
@@ -111,13 +110,7 @@ class World {
     this.throwableObjects.forEach((bottle, bottleIndex) => {
       this.level.enemies.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy)) {
-          if (enemy instanceof EndBoss) {
-            enemy.hit();
-            let pct = (enemy.health / enemy.maxHealth) * 100;
-            this.statusBarEndbossHealth.setPerscentage(pct);
-          } else {
-            this.killChicken(enemy, enemyIndex);
-          }
+          this.enemyHit(enemy, enemyIndex);
           this.throwableObjects.splice(bottleIndex, 1);
         }
       });
@@ -128,16 +121,31 @@ class World {
     });
   }
 
+  enemyHit(enemy, enemyIndex) {
+    if (enemy instanceof EndBoss) {
+      enemy.hit();
+      this.updateStatusbars(enemy);
+    } else {
+      this.killChicken(enemy, enemyIndex);
+    }
+  }
+
   killChicken(enemy, enemyIndex) {
     if (enemy.health > 0) {
       enemy.health = 0;
-      this.character.speedY = 18;
-      playSound(
-        chickenDeadSounds[Math.floor(Math.random() * chickenDeadSounds.length)],
-      );
+      playSound(chickenDead[Math.floor(Math.random() * chickenDead.length)]);
       setTimeout(() => {
         this.level.enemies.splice(enemyIndex, 1);
       }, 500);
+    }
+  }
+
+  updateStatusbars(enemy) {
+    this.statusBarCoin.setPercentage(this.character.collectedCoins, this.level.maxCoins);
+    this.statusBarBottle.setPercentage(this.character.collectedBottles, this.level.maxBottles);
+    this.statusBarHealth.setPercentage(this.character.health);
+    if (enemy instanceof EndBoss) {
+      this.statusBarEndbossHealth.setPercentage(enemy.health, enemy.maxHealth);
     }
   }
 
@@ -175,14 +183,14 @@ class World {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";
     let coins = this.character.collectedCoins;
-    this.ctx.fillText(`${coins}/${totalCoins}`, 180, 77);
+    this.ctx.fillText(`${coins}/${this.level.maxCoins}`, 180, 77);
   }
 
   drawBottlesAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";
     let bottles = this.character.collectedBottles;
-    this.ctx.fillText(`${bottles}/${totalBottles}`, 180, 116);
+    this.ctx.fillText(`${bottles}/${this.level.maxBottles}`, 180, 116);
   }
 
   addObjectsToMap(objects) {

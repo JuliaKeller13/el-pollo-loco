@@ -12,7 +12,7 @@ const gameSounds = {
   gameStart: new Audio("assets/audio/sounds/game/gameStart.mp3"),
 };
 
-const chickenDeadSounds = [
+const chickenDead = [
   new Audio("assets/audio/sounds/chicken/chickenDead.mp3"),
   new Audio("assets/audio/sounds/chicken/chickenDead2.mp3"),
 ]

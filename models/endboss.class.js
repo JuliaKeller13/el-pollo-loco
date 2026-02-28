@@ -1,6 +1,6 @@
 class EndBoss extends MovableObject {
-  health = 60;
-  maxHealth = 60;
+  health = 50;
+  maxHealth = 50;
   height = 250;
   width = 200;
   speed = 10;

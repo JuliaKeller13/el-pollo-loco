@@ -1,7 +1,7 @@
 class Character extends MovableObject {
   posX = 30;
   posY = 133;
-  height = 300;
+  height = 295;
   width = 150;
   speed = 12;
   idleTimer = 0;
@@ -65,12 +65,12 @@ class Character extends MovableObject {
   world;
   offset = {
     top: 135,
-    left: 50,
-    right: 50,
+    left: 40,
+    right: 40,
     bottom: 15,
   };
   collectedCoins = 0;
-  collectedBottles = 10;
+  collectedBottles = 0;
 
   constructor() {
     super().loadImage("assets/img/2_character_pepe/1_idle/idle/I-1.png");
@@ -160,7 +160,7 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
+    if (this.idleTimer > 150000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
       this.playAnimation(this.longIdleImages);
       playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {

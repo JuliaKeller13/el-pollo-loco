@@ -1,5 +1,5 @@
 class ThrowableObject extends Bottle {
-  constructor(x, y) {
+    constructor(x, y) {
     super().loadImage('assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
     this.posX = x + 20;
     this.posY = y + 70;
@@ -13,7 +13,7 @@ class ThrowableObject extends Bottle {
     this.applyGravity();
     this.animate();
     setInterval(() => {
-      this.posX += 15;
+      this.posX += 10;
     }, 25);
   }
 
@@ -22,6 +22,4 @@ class ThrowableObject extends Bottle {
         this.playAnimation(this.bottleRotationImgs)
     }, 100);
   }
-
-  
 }

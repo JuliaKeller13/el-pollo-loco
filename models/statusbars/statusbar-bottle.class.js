@@ -10,6 +10,6 @@ class StatusBarBottle extends StatusBar {
     ];
     super(imgs);
     this.posY = 80;
-    this.setPerscentage(0);
+    this.setPercentage(0);
   }
 }
