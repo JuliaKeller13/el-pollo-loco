@@ -25,6 +25,9 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.level.enemies.forEach((enemy) => {
+      enemy.world = this;
+    });
   }
 
   run() {
@@ -142,7 +145,7 @@ class World {
         playSound(chickenDead[Math.floor(Math.random() * chickenDead.length)]);
         this.updateStatusbars(enemy);
       } else {
-        //tot endboss
+        this.killEndBoss();
       }
     } else {
       this.killChicken(enemy, enemyIndex);

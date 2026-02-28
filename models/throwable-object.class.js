@@ -41,7 +41,7 @@ class ThrowableObject extends Bottle {
 
   isAboveGround() {
     if (this.splashing) {
-      return false; // Stoppt die Schwerkraft-Berechnung sofort
+      return false;
     } else{
       return true;
     }

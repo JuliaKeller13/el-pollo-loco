@@ -1,9 +1,9 @@
 class EndBoss extends MovableObject {
-  health = 50;
-  maxHealth = 50;
+  health = 100;
+  maxHealth = 100;
   height = 250;
   width = 200;
-  speed = 10;
+  speed = 40;
   posY = 185;
   offset = {
     top: 80,
@@ -11,6 +11,8 @@ class EndBoss extends MovableObject {
     right: 25,
     bottom: 60,
   };
+  world;
+  isAttacking = false;
 
   walkingImages = [
     "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -62,7 +64,42 @@ class EndBoss extends MovableObject {
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.alertImages);
+      if (this.isDead()) {
+        this.playAnimationOnce(this.deadImages);
+        return;
+      }
+      if (this.isHurt()) {
+        this.playAnimation(this.hurtImages);
+      } else if (this.isNearCharacter()) {
+        this.attackSequence();
+      } else {
+        this.playAnimation(this.alertImages);
+        this.isAttacking = false; 
+      }
     }, 200);
+  }
+
+  attackSequence() {
+    if (!this.isAttacking) {
+      this.isAttacking = true;
+      this.posX -= this.speed;
+      this.playAnimation(this.walkingImages);
+
+      setTimeout(() => {
+        if (!this.isDead()) {
+          this.playAnimation(this.attackImages);
+        }
+
+        setTimeout(() => {
+          this.isAttacking = false;
+        }, 1000);
+      }, 500);
+    }
+  }
+
+  isNearCharacter() {
+    if (!this.world || !this.world.character) return false;
+    let distance = Math.abs(this.posX - this.world.character.posX);
+    return distance < 400;
   }
 }
