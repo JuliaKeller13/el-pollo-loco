@@ -3,7 +3,7 @@ class EndBoss extends MovableObject {
   maxHealth = 100;
   height = 250;
   width = 200;
-  speed = 40;
+  speed = 20;
   posY = 185;
   offset = {
     top: 80,
@@ -13,6 +13,7 @@ class EndBoss extends MovableObject {
   };
   world;
   isAttacking = false;
+  speedY = 20;
 
   walkingImages = [
     "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -59,6 +60,7 @@ class EndBoss extends MovableObject {
     this.loadImages(this.hurtImages);
     this.loadImages(this.deadImages);
     this.posX = 8800;
+    this.applyGravity();
     this.animate();
   }
 
@@ -66,40 +68,65 @@ class EndBoss extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimationOnce(this.deadImages);
-        return;
-      }
-      if (this.isHurt()) {
+      } else if (this.isHurt()) {
         this.playAnimation(this.hurtImages);
+      } else if (this.isAttacking) {
+        this.playAnimation(this.attackImages);
       } else if (this.isNearCharacter()) {
-        this.attackSequence();
+        this.playAnimation(this.walkingImages);
+        this.posX -= this.speed;
       } else {
         this.playAnimation(this.alertImages);
-        this.isAttacking = false; 
       }
-    }, 200);
+      this.checkDirection();
+    }, 150);
+
+    setInterval(() => {
+      if (!this.isDead() && this.isNearCharacter()) {
+        this.moveToCharacter();
+      }
+    }, 1000 / 60);
   }
 
-  attackSequence() {
+  startAttack() {
     if (!this.isAttacking) {
       this.isAttacking = true;
-      this.posX -= this.speed;
-      this.playAnimation(this.walkingImages);
-
+      this.speedY = 30;
       setTimeout(() => {
-        if (!this.isDead()) {
-          this.playAnimation(this.attackImages);
-        }
-
-        setTimeout(() => {
-          this.isAttacking = false;
-        }, 1000);
-      }, 500);
+        this.isAttacking = false;
+      }, 2000);
     }
+  }
+
+  isAboveGround() {
+    return this.posY < 185;
   }
 
   isNearCharacter() {
     if (!this.world || !this.world.character) return false;
-    let distance = Math.abs(this.posX - this.world.character.posX);
-    return distance < 400;
+    let distanceLeft = Math.abs(this.posX - this.world.character.posX);
+    let distanceReight = Math.abs(this.world.character.posX - this.posX);
+    return distanceLeft < 400 || distanceReight < 400;
+  }
+
+  checkDirection() {
+    if (!this.world || !this.world.character) return;
+    if (this.world.character.posX > this.posX) {
+      this.otherDirection = true;
+    } else {
+      this.otherDirection = false;
+    }
+  }
+
+  moveToCharacter() {
+    let currentSpeed = this.isAttacking ? 7 : 3;
+    if (this.world.character.posX > this.posX) {
+      this.posX += currentSpeed;
+    } else if (this.world.character.posX < this.posX) {
+      this.posX -= currentSpeed;
+    }
+    if (this.health <= this.maxHealth / 2) {
+      this.startAttack();
+    }
   }
 }
