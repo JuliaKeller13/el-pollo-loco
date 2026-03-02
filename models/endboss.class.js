@@ -91,7 +91,7 @@ class EndBoss extends MovableObject {
   startAttack() {
     if (!this.isAttacking) {
       this.isAttacking = true;
-      this.speedY = 30;
+      this.speedY = 35;
       setTimeout(() => {
         this.isAttacking = false;
       }, 2000);
@@ -106,7 +106,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 400 || distanceReight < 400;
+    return distanceLeft < 350 || distanceReight < 350;
   }
 
   checkDirection() {

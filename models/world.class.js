@@ -178,35 +178,43 @@ class World {
   }
 
   draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.cameraX, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
-    this.addObjectsToMap(this.level.bottles);
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.ctx.translate(-this.cameraX, 0);
-    // ------ Space for fixed objects ------
-    this.addToMap(this.statusBarHealth);
-    this.addToMap(this.statusBarCoin);
-    this.addToMap(this.statusBarBottle);
-    this.addToMap(this.statusBarEndbossHealth);
-    this.drawCoinsAmount();
-    this.drawBottlesAmount();
-    this.ctx.translate(this.cameraX, 0);
+  // --- Llayer 3 ---
+  this.ctx.translate(this.cameraX * 0.2, 0);
+  this.addObjectsToMap(this.level.backgroundLayer3);
+  this.addObjectsToMap(this.level.clouds);
+  this.ctx.translate(-(this.cameraX * 0.2), 0);
 
-    this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.throwableObjects);
-    this.addToMap(this.character);
+  // --- Llayer 2 ---
+  this.ctx.translate(this.cameraX * 0.4, 0);
+  this.addObjectsToMap(this.level.backgroundLayer2);
+  this.ctx.translate(-(this.cameraX * 0.4), 0);
 
-    this.ctx.translate(-this.cameraX, 0);
+  // --- Llayer 1 ---
+  this.ctx.translate(this.cameraX * 0.6, 0);
+  this.addObjectsToMap(this.level.backgroundLayer1);
+  this.ctx.translate(-(this.cameraX * 0.6), 0);
 
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
-  }
+  // --- fixed ---
+  this.addToMap(this.statusBarHealth);
+  this.addToMap(this.statusBarCoin);
+  this.addToMap(this.statusBarBottle);
+  this.addToMap(this.statusBarEndbossHealth);
 
+  // --- mit der Kamera ---
+  this.ctx.translate(this.cameraX, 0);
+  this.addObjectsToMap(this.level.enemies);
+  this.addObjectsToMap(this.level.coins);
+  this.addObjectsToMap(this.level.bottles);
+  this.addObjectsToMap(this.throwableObjects);
+  this.addToMap(this.character);
+  this.ctx.translate(-this.cameraX, 0);
+
+  // Loop
+  let self = this;
+  requestAnimationFrame(() => self.draw());
+}
   drawCoinsAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";

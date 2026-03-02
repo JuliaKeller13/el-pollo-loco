@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-  posX = 30;
+  posX = 40;
   posY = 133;
   height = 295;
   width = 150;
@@ -115,7 +115,6 @@ class Character extends MovableObject {
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
       }
-      
 
       this.world.cameraX = -this.posX + 100;
     }, 1000 / 60);
