@@ -187,6 +187,10 @@ class World {
 
   draw() {
     if (this.gameOver) return;
+    if (this.gamePaused) {
+    requestAnimationFrame(() => this.draw());
+    return;
+  }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // --- Llayer 3 ---
@@ -210,6 +214,8 @@ class World {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusBarEndbossHealth);
+    this.drawCoinsAmount();
+    this.drawBottlesAmount();
 
     // --- mit der Kamera ---
     this.ctx.translate(this.cameraX, 0);
@@ -224,6 +230,7 @@ class World {
     let self = this;
     requestAnimationFrame(() => self.draw());
   }
+
   drawCoinsAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";

@@ -167,8 +167,7 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 150000 && this.idleCounter % 4 == 0) {
-      //!!!!!!!!!!!!!!später auf 15s setzen
+    if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) {
       this.playAnimation(this.longIdleImages);
       playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {

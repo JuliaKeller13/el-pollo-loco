@@ -30,19 +30,21 @@ class MovableObject extends DrawableObject {
   }
 
   moveRight() {
-    if(!this.gamePaused){
+    if (!this.world || !this.world.gamePaused) {
       this.posX += this.speed;
     }
   }
 
   moveLeft() {
-    if(!this.gamePaused){
+    if (!this.world || !this.world.gamePaused) {
       this.posX -= this.speed;
     }
   }
 
   applyGravity() {
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
+      if (this.world && this.world.gamePaused) return;
+
       if (this.isAboveGround() || this.speedY > 0) {
         this.posY -= this.speedY;
         this.speedY -= this.acceleration;

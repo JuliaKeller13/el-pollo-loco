@@ -15,7 +15,7 @@ function openStartScreen() {
   infoScreen = document.getElementById("infoScreen");
 
   if (startScreen) {
-    startScreen.showModal();
+    startScreen.show();
     startScreen.addEventListener("cancel", (e) => e.preventDefault());
   }
 }
@@ -29,11 +29,12 @@ function startGame() {
 
 function init() {
   canvas = document.getElementById("canvas");
-  world = new World(canvas, keyboard);
+  initLevel();
+  world = new World(canvas, keyboard, level1);
 }
 
 function openInfo() {
-  infoScreen.showModal();
+  infoScreen.show();
   world.gamePaused = true;
 }
 
@@ -44,7 +45,17 @@ function closeInfo() {
 
 function toggleMute() {
   isMuted = !isMuted;
-  muteIcon = document.getElementById("muteIcon");
+
+  Object.values(gameSounds).forEach(sound => {
+    sound.muted = isMuted;
+  });
+
+  chickenDead.forEach(sound => {
+    sound.muted = isMuted;
+  });
+
+  // let muteIcon = document.getElementById("muteIcon");
+  // muteIcon.src = isMuted ? "img/mute.png" : "img/sound.png";
 }
 
 function loseWinScreen(win) {
@@ -62,7 +73,7 @@ function loseWinScreen(win) {
   }
 
   if (endScreen) {
-    endScreen.showModal();
+    endScreen.show();
     endScreen.oncancel = (e) => e.preventDefault();
   }
 }

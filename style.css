@@ -34,15 +34,24 @@ h1 {
   text-align: center;
 }
 
+.game-container {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  height: 480px;
+}
+
 canvas {
   background: linear-gradient(
     to bottom,
-  #925a7c 0%,
-  #e3a38d 35%,
-  #e0c472 60%,
-  #f3daab 100%
+    #925a7c 0%,
+    #e3a38d 35%,
+    #e0c472 60%,
+    #f3daab 100%
   );
   display: block;
+  width: 100%;
+  height: auto;
 }
 
 dialog {
@@ -53,6 +62,10 @@ dialog {
   color: rgba(0, 0, 0, 0.8);
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 dialog::backdrop {
@@ -60,16 +73,12 @@ dialog::backdrop {
   backdrop-filter: blur(6px);
 }
 
-.control-info{
+.control-info {
   background-color: #e0c472;
   padding: 10px;
   margin: 10px;
   border-radius: 8px;
 }
-
-
-
-
 
 @media only screen and (max-width: 720px) {
   canvas {
