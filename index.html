@@ -2,14 +2,59 @@
 <html lang="en" translate="no">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-     <link rel="icon" type="image/png" href="./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png"/>
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png"
+    />
     <title>El Pollo Loco</title>
   </head>
-  <body onload="init()">
+  <body onload="openStartScreen()">
     <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"> </canvas>
+    <main>
+      <section id="game-container">
+        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <div class="ingame-ui">
+          <button onclick="toggleMute()" class="icon-button">MUTE
+          </button>
+          <button onclick="openInfo()" class="icon-button">Info
+          </button>
+        </div>
+
+        <dialog id="startScreen" class="start-screen">
+          <div class="dialog-content">
+            <button class="button" id="startButton" onclick="startGame()">
+              START GAME
+            </button>
+          </div>
+        </dialog>
+
+        <dialog id="infoScreen" class="info-screen">
+          <div class="control-info">
+            <p>
+              Left: ArrowLeft<br />
+              Reight: ArrowRight<br />
+              Jump: Space<br />
+              Thtow: c
+            </p>
+          </div>
+          <button class="button" onclick="closeInfo()">Schließen</button>
+        </dialog>
+
+        <dialog id="endScreen" class="end-screen">
+          <div class="dialog-content">
+            <div id="statusMessage"></div>
+            <button class="button" id="restartButton" onclick="restartGame()">
+              RESTART
+            </button>
+          </div>
+        </dialog>
+      </section>
+    </main>
+
     <script src="./scripts/audio.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>

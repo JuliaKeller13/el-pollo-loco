@@ -30,11 +30,15 @@ class MovableObject extends DrawableObject {
   }
 
   moveRight() {
-    this.posX += this.speed;
+    if(!this.gamePaused){
+      this.posX += this.speed;
+    }
   }
 
   moveLeft() {
-    this.posX -= this.speed;
+    if(!this.gamePaused){
+      this.posX -= this.speed;
+    }
   }
 
   applyGravity() {

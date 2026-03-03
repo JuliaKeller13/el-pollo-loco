@@ -59,9 +59,9 @@ class Character extends MovableObject {
     "assets/img/2_character_pepe/5_dead/D-53.png",
     "assets/img/2_character_pepe/5_dead/D-54.png",
     "assets/img/2_character_pepe/5_dead/D-55.png",
-    "assets/img/2_character_pepe/5_dead/D-56.png"
+    "assets/img/2_character_pepe/5_dead/D-56.png",
   ];
-  
+
   world;
   offset = {
     top: 135,
@@ -86,7 +86,9 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
-      let isMoving = (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround();
+      let isMoving =
+        (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+        !this.isAboveGround();
       if (isMoving) {
         playSound(gameSounds.characterRun);
       } else {
@@ -99,12 +101,18 @@ class Character extends MovableObject {
           this.speedY = 20;
           playSound(gameSounds.characterDead);
           this.isAnimationFinished = true;
+          setTimeout(() => {
+            loseWinScreen(false);
+          }, 1000);
         }
         return;
       }
       this.checkLongIdle();
 
-      if (this.world.keyboard.RIGHT && this.posX < this.world.level.levelPosXEnd) {
+      if (
+        this.world.keyboard.RIGHT &&
+        this.posX < this.world.level.levelPosXEnd
+      ) {
         this.moveRight();
         this.otherDirection = false;
       }
@@ -159,7 +167,8 @@ class Character extends MovableObject {
 
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 150000 && this.idleCounter % 4 == 0) { //!!!!!!!!!!!!!!später auf 15s setzen
+    if (this.idleTimer > 150000 && this.idleCounter % 4 == 0) {
+      //!!!!!!!!!!!!!!später auf 15s setzen
       this.playAnimation(this.longIdleImages);
       playSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {

@@ -14,6 +14,7 @@ class EndBoss extends MovableObject {
   world;
   isAttacking = false;
   speedY = 20;
+  winTrigg = false;
 
   walkingImages = [
     "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -68,6 +69,12 @@ class EndBoss extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimationOnce(this.deadImages);
+        if (!this.winTriggered) {
+          this.winTriggered = true; 
+          setTimeout(() => {
+            loseWinScreen(true);
+          }, 1500);
+        }
       } else if (this.isHurt()) {
         this.playAnimation(this.hurtImages);
       } else if (this.isAttacking) {
@@ -106,7 +113,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 350 || distanceReight < 350;
+    return distanceLeft < 300 || distanceReight < 300;
   }
 
   checkDirection() {

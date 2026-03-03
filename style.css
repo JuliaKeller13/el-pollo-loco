@@ -45,6 +45,32 @@ canvas {
   display: block;
 }
 
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #e3a38d;
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.8);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+}
+
+.control-info{
+  background-color: #e0c472;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+
+
+
+
 @media only screen and (max-width: 720px) {
   canvas {
     width: 100%;

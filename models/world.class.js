@@ -13,6 +13,7 @@ class World {
   throwableObjects = [];
   throwCooldown = 500;
   lastThrow = 0;
+  gamePaused = false;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -31,10 +32,17 @@ class World {
   }
 
   run() {
-    setInterval(() => {
-      this.checkCollisions();
-      this.checkThrowableObjects();
+    this.runInterval = setInterval(() => {
+      if (!this.gamePaused) {
+        this.checkCollisions();
+        this.checkThrowableObjects();
+      }
     }, 50);
+  }
+
+  stopGame() {
+    clearInterval(this.runInterval);
+    this.gameOver = true;
   }
 
   checkCollisions() {
@@ -178,43 +186,44 @@ class World {
   }
 
   draw() {
-  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    if (this.gameOver) return;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-  // --- Llayer 3 ---
-  this.ctx.translate(this.cameraX * 0.2, 0);
-  this.addObjectsToMap(this.level.backgroundLayer3);
-  this.addObjectsToMap(this.level.clouds);
-  this.ctx.translate(-(this.cameraX * 0.2), 0);
+    // --- Llayer 3 ---
+    this.ctx.translate(this.cameraX * 0.2, 0);
+    this.addObjectsToMap(this.level.backgroundLayer3);
+    this.addObjectsToMap(this.level.clouds);
+    this.ctx.translate(-(this.cameraX * 0.2), 0);
 
-  // --- Llayer 2 ---
-  this.ctx.translate(this.cameraX * 0.4, 0);
-  this.addObjectsToMap(this.level.backgroundLayer2);
-  this.ctx.translate(-(this.cameraX * 0.4), 0);
+    // --- Llayer 2 ---
+    this.ctx.translate(this.cameraX * 0.3, 0);
+    this.addObjectsToMap(this.level.backgroundLayer2);
+    this.ctx.translate(-(this.cameraX * 0.3), 0);
 
-  // --- Llayer 1 ---
-  this.ctx.translate(this.cameraX * 0.6, 0);
-  this.addObjectsToMap(this.level.backgroundLayer1);
-  this.ctx.translate(-(this.cameraX * 0.6), 0);
+    // --- Llayer 1 ---
+    this.ctx.translate(this.cameraX * 0.5, 0);
+    this.addObjectsToMap(this.level.backgroundLayer1);
+    this.ctx.translate(-(this.cameraX * 0.5), 0);
 
-  // --- fixed ---
-  this.addToMap(this.statusBarHealth);
-  this.addToMap(this.statusBarCoin);
-  this.addToMap(this.statusBarBottle);
-  this.addToMap(this.statusBarEndbossHealth);
+    // --- fixed ---
+    this.addToMap(this.statusBarHealth);
+    this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBarEndbossHealth);
 
-  // --- mit der Kamera ---
-  this.ctx.translate(this.cameraX, 0);
-  this.addObjectsToMap(this.level.enemies);
-  this.addObjectsToMap(this.level.coins);
-  this.addObjectsToMap(this.level.bottles);
-  this.addObjectsToMap(this.throwableObjects);
-  this.addToMap(this.character);
-  this.ctx.translate(-this.cameraX, 0);
+    // --- mit der Kamera ---
+    this.ctx.translate(this.cameraX, 0);
+    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.throwableObjects);
+    this.addToMap(this.character);
+    this.ctx.translate(-this.cameraX, 0);
 
-  // Loop
-  let self = this;
-  requestAnimationFrame(() => self.draw());
-}
+    // Loop
+    let self = this;
+    requestAnimationFrame(() => self.draw());
+  }
   drawCoinsAmount() {
     this.ctx.font = "19px Arial";
     this.ctx.fillStyle = "white";
