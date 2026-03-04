@@ -180,6 +180,11 @@ class Character extends MovableObject {
     this.idleCounter++;
   }
 
+  hit() {
+    super.hit();
+    this.idleTimer = 0;
+  }
+
   checkLongIdle() {
     if (
       this.world.keyboard.RIGHT ||

@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png"
-    />
+    <link rel="icon" type="image/png" href="./assets/img/sombrero.png" />
     <title>El Pollo Loco</title>
   </head>
   <body onload="openStartScreen()">
@@ -18,7 +14,13 @@
         <canvas id="canvas" width="800" height="480"></canvas>
 
         <div class="ingame-ui">
-          <button onclick="toggleFullscreen()" class="icon-button" id="fullscreenButton">⛶</button>
+          <button onclick="toggleFullscreen()" class="icon-button">
+            <img
+              id="fullscreenButton"
+              src="./assets/img/fullscreen.png"
+              alt="Mute"
+            />
+          </button>
           <button onclick="toggleMute()" class="icon-button">
             <img
               id="muteIcon"
@@ -29,23 +31,43 @@
           <button onclick="openInfo()" class="icon-button">Info</button>
         </div>
 
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls">
+          <div class="control-group left-controls">
+            <button id="btnLeft" class="mobile-button mobile-button-left" touch-action="manipulation">🡸</button>
+            <button id="btnRight" class="mobile-button mobile-button-right" touch-action="manipulation">🡺</button>
+          </div>
+          <div class="control-group right-controls">
+            <button id="btnJump" class="mobile-button mobile-button-jump" touch-action="manipulation">🡹</button>
+            <button id="btnThrow" class="mobile-button mobile-button-throw" touch-action="manipulation">
+              <img src="./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png" alt="bottle">
+            </button>
+          </div>
+        </div>
+
         <dialog id="startScreen" class="start-screen">
-          <img src="./assets/img/9_intro_outro_screens/startscreen_1.png" class="screen-bg">
+          <img
+            src="./assets/img/9_intro_outro_screens/startscreen_1.png"
+            class="screen-bg"
+          />
           <div class="dialog-content">
-            <button class="button" id="startButton" onclick="startGame()">START GAME</button>
+            <button class="button" id="startButton" onclick="startGame()">
+              START GAME
+            </button>
           </div>
         </dialog>
 
         <dialog id="infoScreen" class="info-screen">
-          <div class="control-info">
-            <p>
-              Left: ArrowLeft<br />
-              Right: ArrowRight<br />
-              Jump: Space<br />
-              Throw: c
-            </p>
+          <div class="dialog-content">
+            <div class="control-info">
+              <p>
+                Left and Right: 🡸 🡺<br />
+                Jump: Space<br />
+                Throw: c
+              </p>
+            <button class="button" onclick="closeInfo()">OK</button>
+            </div>
           </div>
-          <button class="button" onclick="closeInfo()">Schließen</button>
         </dialog>
 
         <dialog id="endScreen" class="end-screen">

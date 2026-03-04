@@ -10,11 +10,11 @@ class Level {
   backgroundLayer2;
   backgroundLayer3;
 
-  constructor(enemyAm, cloudAm, coinAm, bottleAm) {
-    this.enemies = this.addEnemies(enemyAm);
+  constructor(cloudAm, coinAm, bottleAm, enemyAm) {
     this.clouds = this.addClouds(cloudAm);
     this.coins = this.addCoins(coinAm);
     this.bottles = this.addBottles(bottleAm);
+    this.enemies = this.addEnemies(enemyAm);
     this.initBAckgroundLayers();
     this.maxCoins = coinAm;
     this.maxBottles = bottleAm;

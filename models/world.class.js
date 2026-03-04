@@ -188,6 +188,11 @@ class World {
     }
   }
 
+  killEndBoss() {
+    playSound(chickenDead[Math.floor(Math.random() * chickenDead.length)]);
+    loseWinScreen(true);
+  }
+
   updateStatusbars(enemy) {
     this.statusBarCoin.setPercentage(
       this.character.collectedCoins,
@@ -237,9 +242,9 @@ class World {
 
     // --- mit der Kamera ---
     this.ctx.translate(this.cameraX, 0);
-    this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.throwableObjects);
     this.addToMap(this.character);
     this.ctx.translate(-this.cameraX, 0);

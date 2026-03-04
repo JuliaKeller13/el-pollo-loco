@@ -36,8 +36,10 @@ function updateFullscreenButton() {
   let fullscreenButton = document.getElementById("fullscreenButton");
   if (!fullscreenButton) return;
 
-  fullscreenButton.innerText =
-    document.fullscreenElement === gameContainer ? "🗗" : "⛶";
+  fullscreenButton.src =
+    document.fullscreenElement === gameContainer
+      ? "./assets/img/fullscreenOff.png"
+      : "./assets/img/fullscreen.png";
 }
 
 document.addEventListener("fullscreenchange", updateFullscreenButton);
@@ -58,28 +60,28 @@ function init() {
 function openInfo() {
   infoScreen.show();
   world.gamePaused = true;
-  toggleMute();
 }
 
 function closeInfo() {
   infoScreen.close();
   world.gamePaused = false;
-  toggleMute();
 }
 
 function toggleMute() {
   isMuted = !isMuted;
 
-  Object.values(gameSounds).forEach(sound => {
+  Object.values(gameSounds).forEach((sound) => {
     sound.muted = isMuted;
   });
 
-  chickenDead.forEach(sound => {
+  chickenDead.forEach((sound) => {
     sound.muted = isMuted;
   });
 
   let muteIcon = document.getElementById("muteIcon");
-  muteIcon.src = isMuted ? "./assets/img/9_intro_outro_screens/mute.png" : "./assets/img/9_intro_outro_screens/ton.png";
+  muteIcon.src = isMuted
+    ? "./assets/img/9_intro_outro_screens/mute.png"
+    : "./assets/img/9_intro_outro_screens/ton.png";
 }
 
 function loseWinScreen(win) {
@@ -88,17 +90,30 @@ function loseWinScreen(win) {
 
   world.stopGame();
 
-  if (win) {
-    statusMessage.innerText = "YOU WIN!";
-    statusMessage.style.color = "green";
-  } else {
-    statusMessage.innerText = "GAME OVER";
-    statusMessage.style.color = "red";
-  }
+  const imgSrc = win 
+    ? "./assets/img/9_intro_outro_screens/You Win A.png" 
+    : "./assets/img/9_intro_outro_screens/game over.png";
+
+  statusMessage.innerHTML = `
+    <div class="end-screen-wrapper">
+      <img src="${imgSrc}" alt="Game Result" class="end-screen-img">
+    </div>
+  `;
 
   if (endScreen) {
     endScreen.show();
     endScreen.oncancel = (e) => e.preventDefault();
+
+    const restartBtn = document.getElementById('restartButton'); 
+    
+    if (restartBtn) {
+      restartBtn.style.display = "none";
+      
+      setTimeout(() => {
+        restartBtn.style.display = "block";
+        restartBtn.classList.add('fade-in');
+      }, 2000);
+    }
   }
 }
 
@@ -153,3 +168,107 @@ document.addEventListener("keyup", (event) => {
       break;
   }
 });
+
+// Mobile Touch Controls
+function initMobileControls() {
+  const isTouchDevice = () => {
+    return (
+      (typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches) ||
+      (typeof navigator !== "undefined" &&
+        navigator.maxTouchPoints &&
+        navigator.maxTouchPoints > 2)
+    );
+  };
+
+  if (isTouchDevice()) {
+    const mobileControls = document.querySelector(".mobile-controls");
+    if (mobileControls) {
+      mobileControls.classList.add("show");
+    }
+
+    // Left Button
+    const btnLeft = document.getElementById("btnLeft");
+    if (btnLeft) {
+      btnLeft.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+      });
+      btnLeft.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+      });
+      btnLeft.addEventListener("mousedown", () => {
+        keyboard.LEFT = true;
+      });
+      btnLeft.addEventListener("mouseup", () => {
+        keyboard.LEFT = false;
+      });
+    }
+
+    // Right Button
+    const btnRight = document.getElementById("btnRight");
+    if (btnRight) {
+      btnRight.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+      });
+      btnRight.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+      });
+      btnRight.addEventListener("mousedown", () => {
+        keyboard.RIGHT = true;
+      });
+      btnRight.addEventListener("mouseup", () => {
+        keyboard.RIGHT = false;
+      });
+    }
+
+    // Jump Button
+    const btnJump = document.getElementById("btnJump");
+    if (btnJump) {
+      btnJump.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+      });
+      btnJump.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+      });
+      btnJump.addEventListener("mousedown", () => {
+        keyboard.SPACE = true;
+      });
+      btnJump.addEventListener("mouseup", () => {
+        keyboard.SPACE = false;
+      });
+    }
+
+    // Throw Button
+    const btnThrow = document.getElementById("btnThrow");
+    if (btnThrow) {
+      btnThrow.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.C = true;
+      });
+      btnThrow.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.C = false;
+      });
+      btnThrow.addEventListener("mousedown", () => {
+        keyboard.C = true;
+      });
+      btnThrow.addEventListener("mouseup", () => {
+        keyboard.C = false;
+      });
+    }
+  }
+}
+
+// Initialize mobile controls on page load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initMobileControls);
+} else {
+  initMobileControls();
+}

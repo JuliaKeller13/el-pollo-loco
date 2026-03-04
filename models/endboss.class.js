@@ -75,7 +75,7 @@ class EndBoss extends MovableObject {
           this.winTriggered = true;
           setTimeout(() => {
             loseWinScreen(true);
-          }, 1500);
+          }, 1000);
         }
       } else if (this.isHurt()) {
         this.playAnimation(this.hurtImages);
@@ -116,7 +116,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 300 || distanceReight < 300;
+    return distanceLeft < 350 || distanceReight < 350;
   }
 
   checkDirection() {
