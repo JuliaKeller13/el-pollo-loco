@@ -17,6 +17,8 @@ class ThrowableObject extends Bottle {
     this.applyGravity();
     this.animate();
     setInterval(() => {
+        if (this.world && this.world.gameOver) return;
+      
       if (!this.splashing) {
         this.posX += 10;
       }
@@ -25,6 +27,8 @@ class ThrowableObject extends Bottle {
 
   animate() {
     setInterval(() => {
+        if (this.world && this.world.gameOver) return;
+      
       if (this.splashing) {
         this.playAnimationOnce(this.bottleSplashImgs);
       } else {

@@ -11,7 +11,6 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "taco", Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -23,7 +22,6 @@ body {
   background-size: cover;
   background-position: top;
   height: 100dvh;
-  font-family: "taco", Arial, Helvetica, sans-serif;
 }
 
 h1 {
@@ -41,6 +39,23 @@ h1 {
   width: 100%;
   max-width: 800px;
   height: 480px;
+}
+
+.game-container:fullscreen {
+  width: 100vw;
+  max-width: none;
+  height: 100vh;
+}
+
+.game-container:fullscreen canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.game-container:fullscreen dialog {
+  max-width: none;
+  max-height: none;
 }
 
 canvas {
@@ -74,24 +89,23 @@ dialog {
 }
 
 .dialog-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .screen-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
 }
 
 .control-info {
@@ -101,75 +115,72 @@ dialog {
   border-radius: 8px;
 }
 
-.ingame-ui{
+.ingame-ui {
   position: absolute;
-  top: 30px;
-  right: 0;
+  top: 7%;
+  right: 0.7%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
-}
-
-.ingame-ui {
-    display: flex;
-    gap: 15px;
-    padding: 20px;
+  padding: 20px
 }
 
 .icon-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    outline: none;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-    text-transform: uppercase;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .icon-button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .icon-button:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .icon-button img {
-    width:  25px;
-    height: 25px;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .button {
-    padding: 16px 32px;
-    font-size: 24px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid white;
-    color: white;
-    border-radius: 12px;
-    transition: transform 0.2s;
+  padding: 12px 22px;
+  font-size: 24px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid white;
+  color: white;
+  border-radius: 12px;
+  transition: transform 0.2s;
+  font-family: "RyeCustom", "taco", Arial, Helvetica, sans-serif;
 }
 
 .button:hover {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 @media only screen and (max-width: 800px) {

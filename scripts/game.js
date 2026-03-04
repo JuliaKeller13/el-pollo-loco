@@ -8,8 +8,10 @@ let statusMessage = document.getElementById("statusMessage");
 let gameOver = false;
 let isMuted = false;
 let gamePaused = false;
+let gameContainer;
 
 function openStartScreen() {
+  gameContainer = document.querySelector(".game-container");
   startScreen = document.getElementById("startScreen");
   endScreen = document.getElementById("endScreen");
   infoScreen = document.getElementById("infoScreen");
@@ -19,6 +21,26 @@ function openStartScreen() {
     startScreen.addEventListener("cancel", (e) => e.preventDefault());
   }
 }
+
+function toggleFullscreen() {
+  if (!gameContainer) return;
+
+  if (document.fullscreenElement === gameContainer) {
+    document.exitFullscreen();
+  } else {
+    gameContainer.requestFullscreen();
+  }
+}
+
+function updateFullscreenButton() {
+  let fullscreenButton = document.getElementById("fullscreenButton");
+  if (!fullscreenButton) return;
+
+  fullscreenButton.innerText =
+    document.fullscreenElement === gameContainer ? "🗗" : "⛶";
+}
+
+document.addEventListener("fullscreenchange", updateFullscreenButton);
 
 function startGame() {
   if (startScreen) {

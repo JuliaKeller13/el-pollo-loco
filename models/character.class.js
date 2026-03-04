@@ -86,6 +86,8 @@ class Character extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (this.world && this.world.gameOver) return;
+
       let isMoving =
         (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
         !this.isAboveGround();
@@ -128,6 +130,8 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
+      if (this.world && this.world.gameOver) return;
+
       if (this.isDead()) {
         this.playAnimationOnce(this.deadImages);
       } else if (this.isHurt()) {

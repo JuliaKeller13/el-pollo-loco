@@ -29,6 +29,15 @@ class World {
     this.level.enemies.forEach((enemy) => {
       enemy.world = this;
     });
+      this.level.coins.forEach((coin) => {
+        coin.world = this;
+      });
+      this.level.bottles.forEach((bottle) => {
+        bottle.world = this;
+      });
+      this.level.clouds.forEach((cloud) => {
+        cloud.world = this;
+      });
   }
 
   run() {
@@ -43,6 +52,14 @@ class World {
   stopGame() {
     clearInterval(this.runInterval);
     this.gameOver = true;
+    Object.values(gameSounds).forEach(sound => {
+      sound.pause();
+      sound.currentTime = 0;
+    });
+    chickenDead.forEach(sound => {
+      sound.pause();
+      sound.currentTime = 0;
+    });
   }
 
   checkCollisions() {
@@ -113,6 +130,7 @@ class World {
         this.character.posY,
       );
       this.throwableObjects.push(bottle);
+        bottle.world = this;
       this.character.collectedBottles--;
       this.updateStatusbars();
     }

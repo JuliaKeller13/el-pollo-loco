@@ -67,10 +67,12 @@ class EndBoss extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (this.world && this.world.gameOver) return;
+
       if (this.isDead()) {
         this.playAnimationOnce(this.deadImages);
         if (!this.winTriggered) {
-          this.winTriggered = true; 
+          this.winTriggered = true;
           setTimeout(() => {
             loseWinScreen(true);
           }, 1500);
@@ -89,6 +91,7 @@ class EndBoss extends MovableObject {
     }, 150);
 
     setInterval(() => {
+      if (this.world && this.world.gameOver) return;
       if (!this.isDead() && this.isNearCharacter()) {
         this.moveToCharacter();
       }

@@ -23,6 +23,8 @@ class Coin extends MovableObject {
 
   animate() {
     setInterval(() => {
+        if (this.world && this.world.gameOver) return;
+      
       this.playAnimation(this.coinImages);
     }, 450);
   }
