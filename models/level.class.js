@@ -25,7 +25,7 @@ class Level {
     this.backgroundLayer2 = [];
     this.backgroundLayer3 = [];
     for (let i = -1; i < 14; i++) {
-      let posX = i * 719;
+      let posX = i * 800;
       let imageNum = i % 2 === 0 ? 1 : 2;
       this.backgroundLayer3.push(new BackgroundObject(`assets/img/5_background/layers/3_third_layer/${imageNum}.png`, posX));
       this.backgroundLayer2.push(new BackgroundObject(`assets/img/5_background/layers/2_second_layer/${imageNum}.png`, posX));

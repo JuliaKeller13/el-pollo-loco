@@ -36,11 +36,13 @@ function init() {
 function openInfo() {
   infoScreen.show();
   world.gamePaused = true;
+  toggleMute();
 }
 
 function closeInfo() {
   infoScreen.close();
   world.gamePaused = false;
+  toggleMute();
 }
 
 function toggleMute() {
@@ -54,8 +56,8 @@ function toggleMute() {
     sound.muted = isMuted;
   });
 
-  // let muteIcon = document.getElementById("muteIcon");
-  // muteIcon.src = isMuted ? "img/mute.png" : "img/sound.png";
+  let muteIcon = document.getElementById("muteIcon");
+  muteIcon.src = isMuted ? "./assets/img/9_intro_outro_screens/mute.png" : "./assets/img/9_intro_outro_screens/ton.png";
 }
 
 function loseWinScreen(win) {
