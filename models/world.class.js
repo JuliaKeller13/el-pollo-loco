@@ -29,15 +29,15 @@ class World {
     this.level.enemies.forEach((enemy) => {
       enemy.world = this;
     });
-      this.level.coins.forEach((coin) => {
-        coin.world = this;
-      });
-      this.level.bottles.forEach((bottle) => {
-        bottle.world = this;
-      });
-      this.level.clouds.forEach((cloud) => {
-        cloud.world = this;
-      });
+    this.level.coins.forEach((coin) => {
+      coin.world = this;
+    });
+    this.level.bottles.forEach((bottle) => {
+      bottle.world = this;
+    });
+    this.level.clouds.forEach((cloud) => {
+      cloud.world = this;
+    });
   }
 
   run() {
@@ -52,11 +52,11 @@ class World {
   stopGame() {
     clearInterval(this.runInterval);
     this.gameOver = true;
-    Object.values(gameSounds).forEach(sound => {
+    Object.values(gameSounds).forEach((sound) => {
       sound.pause();
       sound.currentTime = 0;
     });
-    chickenDead.forEach(sound => {
+    chickenDead.forEach((sound) => {
       sound.pause();
       sound.currentTime = 0;
     });
@@ -131,7 +131,7 @@ class World {
         this.character.otherDirection,
       );
       this.throwableObjects.push(bottle);
-        bottle.world = this;
+      bottle.world = this;
       this.character.collectedBottles--;
       this.updateStatusbars();
     }
@@ -156,7 +156,7 @@ class World {
 
   brokeBottle(bottle) {
     bottle.splash();
-    playQuietSoundOften(gameSounds.bottlebrake);
+    playSoundOften(gameSounds.bottlebrake);
     setTimeout(() => {
       let currentIndex = this.throwableObjects.indexOf(bottle);
       if (currentIndex > -1) {
@@ -212,36 +212,21 @@ class World {
   draw() {
     if (this.gameOver) return;
     if (this.gamePaused) {
-    requestAnimationFrame(() => this.draw());
-    return;
-  }
+      requestAnimationFrame(() => this.draw());
+      return;
+    }
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // --- Llayer 3 ---
-    this.ctx.translate(this.cameraX * 0.2, 0);
-    this.addObjectsToMap(this.level.backgroundLayer3);
-    this.addObjectsToMap(this.level.clouds);
-    this.ctx.translate(-(this.cameraX * 0.2), 0);
+    // Background Layer
+    this.drawLayer(this.level.backgroundLayer3, 0.2);
+    this.drawLayer(this.level.clouds, 0.2);
+    this.drawLayer(this.level.backgroundLayer2, 0.3);
+    this.drawLayer(this.level.backgroundLayer1, 0.5);
 
-    // --- Llayer 2 ---
-    this.ctx.translate(this.cameraX * 0.3, 0);
-    this.addObjectsToMap(this.level.backgroundLayer2);
-    this.ctx.translate(-(this.cameraX * 0.3), 0);
+    this.drawUI();
 
-    // --- Llayer 1 ---
-    this.ctx.translate(this.cameraX * 0.5, 0);
-    this.addObjectsToMap(this.level.backgroundLayer1);
-    this.ctx.translate(-(this.cameraX * 0.5), 0);
-
-    // --- fixed ---
-    this.addToMap(this.statusBarHealth);
-    this.addToMap(this.statusBarCoin);
-    this.addToMap(this.statusBarBottle);
-    this.addToMap(this.statusBarEndbossHealth);
-    this.drawCoinsAmount();
-    this.drawBottlesAmount();
-
-    // --- mit der Kamera ---
+    // Camera Layer
     this.ctx.translate(this.cameraX, 0);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
@@ -250,9 +235,23 @@ class World {
     this.addToMap(this.character);
     this.ctx.translate(-this.cameraX, 0);
 
-    // Loop
-    let self = this;
-    requestAnimationFrame(() => self.draw());
+    requestAnimationFrame(() => this.draw());
+  }
+
+  drawLayer(objects, factor) {
+    this.ctx.translate(this.cameraX * factor, 0);
+    this.addObjectsToMap(objects);
+    this.ctx.translate(-(this.cameraX * factor), 0);
+  }
+
+  drawUI() {
+    this.addToMap(this.statusBarHealth);
+    this.addToMap(this.statusBarCoin);
+    this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBarEndbossHealth);
+
+    this.drawCoinsAmount();
+    this.drawBottlesAmount();
   }
 
   drawCoinsAmount() {
@@ -280,7 +279,6 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    // mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
       this.flipImageBack(mo);
     }

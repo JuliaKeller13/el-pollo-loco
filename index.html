@@ -78,6 +78,9 @@
             <button class="button" id="startButton" onclick="startGame()">
               START GAME
             </button>
+            <button class="button secondary" onclick="openImpressum()">
+              IMPRESSUM
+            </button>
           </div>
         </dialog>
 
@@ -102,6 +105,26 @@
             <button class="button" id="restartButton" onclick="restartGame()">
               RESTART
             </button>
+          </div>
+        </dialog>
+
+        <dialog id="impressumScreen" class="info-screen">
+          <div class="dialog-content">
+            <div class="control-info impressum-content">
+              <h2>Impressum</h2>
+              <p>
+                <strong>Angaben gemäß § 5 TMG:</strong><br/>
+                Julia Keller<br/>
+                Bremsheide 185<br/>
+                58638 Iserlohn<br/><br/>
+                <strong>Kontakt:</strong><br/>
+                E-Mail: juliakeller.vk@gmail.com<br/><br/>
+                <strong>Haftungsausschluss:</strong><br/>
+                Dies ist ein Lernprojekt.<br/>
+                Alle Inhalte dienen ausschließlich Bildungszwecken.
+              </p>
+              <button class="button" onclick="closeImpressum()">SCHLIESSEN</button>
+            </div>
           </div>
         </dialog>
       </section>

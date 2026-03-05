@@ -1,6 +1,6 @@
 class EndBoss extends MovableObject {
-  health = 60;
-  maxHealth = 60;
+  health = 40;
+  maxHealth = 40;
   height = 250;
   width = 200;
   speed = 20;
@@ -65,39 +65,43 @@ class EndBoss extends MovableObject {
     this.animate();
   }
 
-  animate() {
-    setInterval(() => {
-      if (this.world && this.world.gameOver) return;
+animate() {
+  const isGameOver = () => this.world && this.world.gameOver;
 
-      if (this.isDead()) {
-        this.playAnimationOnce(this.deadImages);
-        if (!this.winTriggered) {
-          this.winTriggered = true;
-          setTimeout(() => {
-            loseWinScreen(true);
-          }, 1000);
-        }
-      } else if (this.isHurt()) {
-        this.playAnimation(this.hurtImages);
-      } else if (this.isAttacking) {
-        this.playAnimation(this.attackImages);
-      } else if (this.isNearCharacter()) {
-        this.playAnimation(this.walkingImages);
-        this.posX -= this.speed;
-      } else {
-        this.playAnimation(this.alertImages);
-      }
-      this.checkDirection();
-    }, 150);
+  setInterval(() => {
+    if (isGameOver()) return;
+    if (this.isDead()) return this.handleDeath();
+    if (this.isHurt()) return this.playAnimation(this.hurtImages);
+    if (this.isAttacking) return this.playAnimation(this.attackImages);
 
-    setInterval(() => {
-      if (this.world && this.world.gameOver) return;
-      if (!this.isDead() && this.isNearCharacter()) {
-        this.moveToCharacter();
-        playSound(gameSounds.endbossApproach);
-      }
-    }, 1000 / 60);
-  }
+    if (this.isNearCharacter()) {
+      this.playAnimation(this.walkingImages);
+      this.posX -= this.speed;
+    } else {
+      this.playAnimation(this.alertImages);
+    }
+    this.checkDirection();
+  }, 150);
+
+
+  setInterval(() => {
+    if (isGameOver()) return;
+    if (!this.isDead() && this.isNearCharacter()) {
+      this.moveToCharacter();
+      playSound(gameSounds.endbossApproach);
+    }
+  }, 1000 / 60);
+}
+
+handleDeath() {
+  this.playAnimationOnce(this.deadImages);
+  if (this.winTriggered) return;
+  this.winTriggered = true;
+
+  setTimeout(() => {
+    loseWinScreen(true);
+  }, 500);
+}
 
   startAttack() {
     if (!this.isAttacking) {
@@ -117,7 +121,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 450 || distanceReight < 450;
+    return distanceLeft < 650 || distanceReight < 650;
   }
 
   checkDirection() {
