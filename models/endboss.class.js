@@ -94,6 +94,7 @@ class EndBoss extends MovableObject {
       if (this.world && this.world.gameOver) return;
       if (!this.isDead() && this.isNearCharacter()) {
         this.moveToCharacter();
+        playSound(gameSounds.endbossApproach);
       }
     }, 1000 / 60);
   }
@@ -101,7 +102,7 @@ class EndBoss extends MovableObject {
   startAttack() {
     if (!this.isAttacking) {
       this.isAttacking = true;
-      this.speedY = 35;
+      this.speedY = 30;
       setTimeout(() => {
         this.isAttacking = false;
       }, 2000);
@@ -116,7 +117,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 250 || distanceReight < 250;
+    return distanceLeft < 450 || distanceReight < 450;
   }
 
   checkDirection() {

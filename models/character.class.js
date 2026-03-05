@@ -92,13 +92,13 @@ class Character extends MovableObject {
         (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
         !this.isAboveGround();
       if (isMoving) {
-        playSound(gameSounds.characterRun);
+        playQuietSound(gameSounds.characterRun);
       } else {
         pauseSound(gameSounds.characterRun);
       }
 
       if (this.isDead()) {
-        pauseSound(gameSounds.characterDamage);
+        playQuietSound(gameSounds.characterDamage);
         if (!this.isAnimationFinished) {
           this.speedY = 20;
           playSound(gameSounds.characterDead);
@@ -148,7 +148,7 @@ class Character extends MovableObject {
 
   jump() {
     this.speedY = 30;
-    playSound(gameSounds.characterJump);
+    playQuietSound(gameSounds.characterJump);
   }
 
   jumpAnimation() {
@@ -173,7 +173,7 @@ class Character extends MovableObject {
     if (!this.idleCounter) this.idleCounter = 0;
     if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) {
       this.playAnimation(this.longIdleImages);
-      playSound(gameSounds.characterSnoring);
+      playQuietSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {
       this.playAnimation(this.idleImages);
     }

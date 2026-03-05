@@ -105,6 +105,7 @@ dialog {
 .end-screen .dialog-content {
   justify-content: stretch;
   padding: 0;
+  animation: screenFadeIn 0.5s ease-in;
 }
 
 #statusMessage {
@@ -144,7 +145,7 @@ dialog {
   height: 40px;
 }
 
-.control-info button{
+.control-info button {
   padding: 5px 10px;
   font-size: 16px;
   border-radius: 7px;
@@ -197,10 +198,6 @@ dialog {
   to {
     opacity: 1;
   }
-}
-
-.end-screen .dialog-content {
-  animation: screenFadeIn 0.5s ease-in;
 }
 
 .ingame-ui {
@@ -297,7 +294,7 @@ dialog {
 .mobile-button {
   width: 60px;
   height: 60px;
-  border-radius: 50px;
+  border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.712);
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
@@ -305,9 +302,6 @@ dialog {
   font-size: 18px;
   cursor: pointer;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   pointer-events: auto;
   touch-action: manipulation;
   transition: all 0.1s ease;
@@ -353,18 +347,11 @@ dialog {
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .mobile-controls,
-  .mobile-controls.show {
-    display: none !important;
-  }
-}
-
 @media (hover: none) and (pointer: coarse) {
   .mobile-controls.show {
     display: flex;
   }
-
+  
   .mobile-button {
     width: 40px;
     height: 40px;

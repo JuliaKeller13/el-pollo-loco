@@ -128,6 +128,7 @@ class World {
       let bottle = new ThrowableObject(
         this.character.posX,
         this.character.posY,
+        this.character.otherDirection,
       );
       this.throwableObjects.push(bottle);
         bottle.world = this;
@@ -155,7 +156,7 @@ class World {
 
   brokeBottle(bottle) {
     bottle.splash();
-    playSoundOften(gameSounds.bottlebrake);
+    playQuietSoundOften(gameSounds.bottlebrake);
     setTimeout(() => {
       let currentIndex = this.throwableObjects.indexOf(bottle);
       if (currentIndex > -1) {

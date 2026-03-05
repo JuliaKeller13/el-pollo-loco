@@ -53,6 +53,10 @@ function startGame() {
 
 function init() {
   canvas = document.getElementById("canvas");
+  gameSounds.background.loop = true;
+  gameSounds.background.currentTime = 0;
+  playSound(gameSounds.gameStart);
+  playQuietSound(gameSounds.background);
   initLevel();
   world = new World(canvas, keyboard, level1);
 }
@@ -87,8 +91,8 @@ function toggleMute() {
 function loseWinScreen(win) {
   if (gameOver) return;
   gameOver = true;
-
   world.stopGame();
+  playSound(win ? gameSounds.gameWin : gameSounds.gameOver);
 
   const imgSrc = win 
     ? "./assets/img/9_intro_outro_screens/You Win A.png" 
@@ -188,7 +192,6 @@ function initMobileControls() {
       mobileControls.classList.add("show");
     }
 
-    // Left Button
     const btnLeft = document.getElementById("btnLeft");
     if (btnLeft) {
       btnLeft.addEventListener("touchstart", (e) => {
@@ -207,7 +210,6 @@ function initMobileControls() {
       });
     }
 
-    // Right Button
     const btnRight = document.getElementById("btnRight");
     if (btnRight) {
       btnRight.addEventListener("touchstart", (e) => {
@@ -226,7 +228,6 @@ function initMobileControls() {
       });
     }
 
-    // Jump Button
     const btnJump = document.getElementById("btnJump");
     if (btnJump) {
       btnJump.addEventListener("touchstart", (e) => {
@@ -245,7 +246,6 @@ function initMobileControls() {
       });
     }
 
-    // Throw Button
     const btnThrow = document.getElementById("btnThrow");
     if (btnThrow) {
       btnThrow.addEventListener("touchstart", (e) => {
@@ -266,7 +266,6 @@ function initMobileControls() {
   }
 }
 
-// Initialize mobile controls on page load
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initMobileControls);
 } else {
