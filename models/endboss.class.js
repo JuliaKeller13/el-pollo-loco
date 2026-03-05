@@ -1,6 +1,6 @@
 class EndBoss extends MovableObject {
-  health = 100;
-  maxHealth = 100;
+  health = 60;
+  maxHealth = 60;
   height = 250;
   width = 200;
   speed = 20;
@@ -116,7 +116,7 @@ class EndBoss extends MovableObject {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 350 || distanceReight < 350;
+    return distanceLeft < 250 || distanceReight < 250;
   }
 
   checkDirection() {

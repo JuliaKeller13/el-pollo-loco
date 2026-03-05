@@ -31,16 +31,40 @@
           <button onclick="openInfo()" class="icon-button">Info</button>
         </div>
 
-        <!-- Mobile Touch Controls -->
         <div class="mobile-controls">
-          <div class="control-group left-controls">
-            <button id="btnLeft" class="mobile-button mobile-button-left" touch-action="manipulation">🡸</button>
-            <button id="btnRight" class="mobile-button mobile-button-right" touch-action="manipulation">🡺</button>
+          <div class="control-group">
+            <button
+              id="btnLeft"
+              class="mobile-button"
+              touch-action="manipulation"
+            >
+              <img src="./assets/img/arrow-left.png" alt="left button" />
+            </button>
+            <button
+              id="btnRight"
+              class="mobile-button"
+              touch-action="manipulation"
+            >
+              <img src="./assets/img/arrow-rightt.png" alt="right button" />
+            </button>
           </div>
-          <div class="control-group right-controls">
-            <button id="btnJump" class="mobile-button mobile-button-jump" touch-action="manipulation">🡹</button>
-            <button id="btnThrow" class="mobile-button mobile-button-throw" touch-action="manipulation">
-              <img src="./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png" alt="bottle">
+          <div class="control-group">
+            <button
+              id="btnJump"
+              class="mobile-button"
+              touch-action="manipulation"
+            >
+              <img src="./assets/img/jump.png" alt="left button" />
+            </button>
+            <button
+              id="btnThrow"
+              class="mobile-button"
+              touch-action="manipulation"
+            >
+              <img
+                src="./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
+                alt="bottle"
+              />
             </button>
           </div>
         </div>
@@ -61,11 +85,13 @@
           <div class="dialog-content">
             <div class="control-info">
               <p>
-                Left and Right: 🡸 🡺<br />
-                Jump: Space<br />
+                Left and Right:<br/>
+                <img src="./assets/img/arrow-left.png" alt="left"/>
+                <img src="./assets/img/arrow-rightt.png" alt="right"/><br/>
+                Jump: Space<br/>
                 Throw: c
               </p>
-            <button class="button" onclick="closeInfo()">OK</button>
+              <button class="button" onclick="closeInfo()">OK</button>
             </div>
           </div>
         </dialog>

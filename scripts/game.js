@@ -92,7 +92,7 @@ function loseWinScreen(win) {
 
   const imgSrc = win 
     ? "./assets/img/9_intro_outro_screens/You Win A.png" 
-    : "./assets/img/9_intro_outro_screens/game over.png";
+    : "./assets/img/9_intro_outro_screens/Game over A.png";
 
   statusMessage.innerHTML = `
     <div class="end-screen-wrapper">
@@ -112,7 +112,7 @@ function loseWinScreen(win) {
       setTimeout(() => {
         restartBtn.style.display = "block";
         restartBtn.classList.add('fade-in');
-      }, 2000);
+      }, 1000);
     }
   }
 }

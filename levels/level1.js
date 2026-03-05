@@ -1,5 +1,5 @@
 let level1;
-maxCoins = 30;
+maxCoins = 20;
 maxBottles = 30;
 
 function initLevel() {
