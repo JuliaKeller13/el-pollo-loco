@@ -56,9 +56,34 @@ function openStartScreen() {
 function toggleFullscreen() {
   if (!gameContainer) return;
   if (document.fullscreenElement === gameContainer) {
-    document.exitFullscreen();
+    // Exit fullscreen
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => console.log("Exit fullscreen error:", err));
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
   } else {
-    gameContainer.requestFullscreen();
+    // Enter fullscreen with fallbacks
+    const fullscreenPromise = gameContainer.requestFullscreen?.() ||
+                              gameContainer.webkitRequestFullscreen?.() ||
+                              gameContainer.mozRequestFullScreen?.() ||
+                              gameContainer.msRequestFullscreen?.() ||
+                              Promise.reject(new Error("Fullscreen not supported"));
+    
+    fullscreenPromise.catch(err => {
+      console.log("Fullscreen request failed:", err.message);
+      // Fallback for devices that don't support fullscreen
+      gameContainer.style.width = "100vw";
+      gameContainer.style.height = "100vh";
+      gameContainer.style.position = "fixed";
+      gameContainer.style.top = "0";
+      gameContainer.style.left = "0";
+      gameContainer.style.zIndex = "9999";
+    });
   }
 }
 
@@ -67,12 +92,20 @@ function toggleFullscreen() {
  */
 function updateFullscreenButton() {
   if (!ELEMENTS.fullscreenBtn) return;
-  ELEMENTS.fullscreenBtn.src = document.fullscreenElement === gameContainer
+  const isFullscreen = document.fullscreenElement === gameContainer ||
+                       document.webkitFullscreenElement === gameContainer ||
+                       document.mozFullScreenElement === gameContainer ||
+                       document.msFullscreenElement === gameContainer;
+  
+  ELEMENTS.fullscreenBtn.src = isFullscreen
     ? "./assets/img/fullscreenOff.png"
     : "./assets/img/fullscreen.png";
 }
 
 document.addEventListener("fullscreenchange", updateFullscreenButton);
+document.addEventListener("webkitfullscreenchange", updateFullscreenButton);
+document.addEventListener("mozfullscreenchange", updateFullscreenButton);
+document.addEventListener("msfullscreenchange", updateFullscreenButton);
 
 /**
  * Starts the game by closing the start screen and initializing the game.
