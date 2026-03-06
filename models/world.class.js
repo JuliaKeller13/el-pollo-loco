@@ -176,7 +176,8 @@ class World {
     if (
       this.keyboard.C &&
       this.character.collectedBottles > 0 &&
-      now - this.lastThrow > this.throwCooldown
+      now - this.lastThrow > this.throwCooldown &&
+      this.character.idleTimer <= 10000
     ) {
       this.lastThrow = now;
       let bottle = new ThrowableObject(

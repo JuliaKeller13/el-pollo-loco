@@ -271,7 +271,8 @@ class Character extends MovableObject {
     if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
-      this.world.keyboard.SPACE
+      this.world.keyboard.SPACE ||
+      this.world.keyboard.C
     ) {
       this.idleTimer = 0;
     } else {
