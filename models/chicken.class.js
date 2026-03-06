@@ -18,8 +18,8 @@ class Chicken extends MovableObject {
   /** @type {Object} Collision detection offset values */
   offset = {
     top: 5,
-    left: 5,
-    right: 5,
+    left: 2,
+    right: 2,
     bottom: 7,
   };
 

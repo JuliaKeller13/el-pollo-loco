@@ -169,7 +169,7 @@ handleDeath() {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 350 || distanceReight < 350;
+    return distanceLeft < 300 || distanceReight < 300;
   }
 
   /**

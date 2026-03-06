@@ -7,7 +7,7 @@
   pointer-events: none;
   padding: clamp(6px, 1.5%, 15px);
   box-sizing: border-box;
-  z-index: 10;
+  z-index: 1;
 }
 
 .mobile-controls.show {

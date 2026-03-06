@@ -247,7 +247,7 @@ class Character extends MovableObject {
    */
   idleAnimation() {
     if (!this.idleCounter) this.idleCounter = 0;
-    if (this.idleTimer > 15000 && this.idleCounter % 4 == 0) {
+    if (this.idleTimer > 10000 && this.idleCounter % 4 == 0) {
       this.playAnimation(this.longIdleImages);
       playQuietSound(gameSounds.characterSnoring);
     } else if (this.idleCounter % 4 == 0) {
