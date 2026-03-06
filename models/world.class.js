@@ -76,7 +76,7 @@ class World {
         this.checkCollisions();
         this.checkThrowableObjects();
       }
-    }, 50);
+    }, 20);
   }
 
   /**
@@ -258,7 +258,7 @@ class World {
       enemy.health = 0;
       playSound(chickenDead[Math.floor(Math.random() * chickenDead.length)]);
       setTimeout(() => {
-        this.level.enemies.splice(enemyIndex, 1);
+        this.level.enemies = this.level.enemies.filter(e => e !== enemy);
       }, 500);
     }
   }

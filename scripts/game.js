@@ -112,6 +112,14 @@ document.addEventListener("msfullscreenchange", updateFullscreenButton);
  */
 function startGame() {
   ELEMENTS.start?.close();
+  const homeBtn = document.getElementById("homeButton");
+  homeBtn?.classList.remove("btn-hidden");
+  
+  const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+  if (isTouch) {
+    document.querySelector(".mobile-controls")?.classList.add("show");
+  }
+  
   init();
 }
 
@@ -246,6 +254,12 @@ function quitGame() {
     world.stopGame();
   }
   gameOver = false;
+  const homeBtn = document.getElementById("homeButton");
+  homeBtn?.classList.add("btn-hidden");
+  
+  // Hide mobile controls
+  document.querySelector(".mobile-controls")?.classList.remove("show");
+  
   ELEMENTS.end?.close();
   ELEMENTS.info?.close();
   ELEMENTS.start.show();
@@ -272,7 +286,7 @@ document.addEventListener("keyup", (e) => handleKeyEvent(e, false));
 function initMobileControls() {
   const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
   if (!isTouch) return;
-  document.querySelector(".mobile-controls")?.classList.add("show");
+  
   const bindTouch = (id, key) => {
     const el = document.getElementById(id);
     if (!el) return;
