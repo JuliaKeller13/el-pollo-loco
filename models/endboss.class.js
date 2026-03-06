@@ -54,15 +54,20 @@ class EndBoss extends MovableObject {
   ];
 
   constructor() {
-    super().loadImage(this.walkingImages[0]);
+    super();
+    this.loadImgs();
+    this.posX = 8800;
+    this.applyGravity();
+    this.animate();
+  }
+
+  loadImgs() {
+    this.loadImage(this.walkingImages[0]);
     this.loadImages(this.walkingImages);
     this.loadImages(this.alertImages);
     this.loadImages(this.attackImages);
     this.loadImages(this.hurtImages);
     this.loadImages(this.deadImages);
-    this.posX = 8800;
-    this.applyGravity();
-    this.animate();
   }
 
 animate() {
@@ -121,7 +126,7 @@ handleDeath() {
     if (!this.world || !this.world.character) return false;
     let distanceLeft = Math.abs(this.posX - this.world.character.posX);
     let distanceReight = Math.abs(this.world.character.posX - this.posX);
-    return distanceLeft < 650 || distanceReight < 650;
+    return distanceLeft < 350 || distanceReight < 350;
   }
 
   checkDirection() {

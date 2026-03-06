@@ -3,13 +3,14 @@ let world;
 let keyboard = new Keyboard();
 let gameContainer;
 let gameOver = false;
-let isMuted = false;
+let isMuted = localStorage.getItem('gameMuted') === 'true';
 
 const ELEMENTS = {
   start: document.getElementById("startScreen"),
   end: document.getElementById("endScreen"),
   info: document.getElementById("infoScreen"),
   impressum: document.getElementById("impressumScreen"),
+  orientation: document.getElementById("orientationScreen"),
   status: document.getElementById("statusMessage"),
   muteIcon: document.getElementById("muteIcon"),
   fullscreenBtn: document.getElementById("fullscreenButton")
@@ -59,6 +60,8 @@ function init() {
   canvas = document.getElementById("canvas");
   gameSounds.background.loop = true;
   gameSounds.background.currentTime = 0;
+  
+  applyMuteSettings();
   playSound(gameSounds.gameStart);
   playQuietSound(gameSounds.background);
   initLevel();
@@ -85,10 +88,23 @@ function closeImpressum() {
 
 function toggleMute() {
   isMuted = !isMuted;
+  
+  // Speichere den neuen Status als String ("true" oder "false")
+  localStorage.setItem('gameMuted', isMuted);
+  
+  applyMuteSettings();
+}
+
+function applyMuteSettings() {
+  // Alle Sounds stummschalten oder aktivieren
   [...Object.values(gameSounds), ...chickenDead].forEach(s => s.muted = isMuted);
-  ELEMENTS.muteIcon.src = isMuted
-    ? "./assets/img/9_intro_outro_screens/mute.png"
-    : "./assets/img/9_intro_outro_screens/ton.png";
+  
+  // Icon aktualisieren
+  if (ELEMENTS.muteIcon) {
+    ELEMENTS.muteIcon.src = isMuted
+      ? "./assets/img/9_intro_outro_screens/mute.png"
+      : "./assets/img/9_intro_outro_screens/ton.png";
+  }
 }
 
 function loseWinScreen(win) {
@@ -130,6 +146,16 @@ function restartGame() {
   init();
 }
 
+function quitGame() {
+  if (world) {
+    world.stopGame();
+  }
+  gameOver = false;
+  ELEMENTS.end?.close();
+  ELEMENTS.info?.close();
+  ELEMENTS.start.show();
+}
+
 const handleKeyEvent = (e, isPressed) => {
   if (KEY_MAP[e.key]) {
     keyboard[KEY_MAP[e.key]] = isPressed;
@@ -162,4 +188,24 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initMobileControls);
 } else {
   initMobileControls();
+}
+
+function checkOrientation() {
+  const isPortrait = window.innerHeight > window.innerWidth;
+  
+  if (isPortrait && ELEMENTS.orientation) {
+    ELEMENTS.orientation.show();
+    ELEMENTS.orientation.oncancel = (e) => e.preventDefault();
+  } else if (ELEMENTS.orientation?.open) {
+    ELEMENTS.orientation.close();
+  }
+}
+
+window.addEventListener("orientationchange", checkOrientation);
+window.addEventListener("resize", checkOrientation);
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", checkOrientation);
+} else {
+  checkOrientation();
 }

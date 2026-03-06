@@ -1,0 +1,59 @@
+.mobile-controls {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  padding: clamp(6px, 1.5%, 15px);
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.mobile-controls.show {
+  display: flex;
+}
+
+.control-group {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  flex-direction: row;
+}
+
+.mobile-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.712);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: auto;
+  touch-action: manipulation;
+  transition: all 0.1s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.mobile-button:active {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-button:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.mobile-button img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
