@@ -44,6 +44,7 @@ const KEY_MAP = {
  */
 function openStartScreen() {
   gameContainer = document.querySelector(".game-container");
+  applyMuteSettings();
   if (ELEMENTS.start) {
     ELEMENTS.start.show();
     ELEMENTS.start.addEventListener("cancel", (e) => e.preventDefault());
@@ -115,6 +116,7 @@ function startGame() {
   const homeBtn = document.getElementById("homeButton");
   homeBtn?.classList.remove("btn-hidden");
   
+  // Show mobile controls on touch devices
   const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
   if (isTouch) {
     document.querySelector(".mobile-controls")?.classList.add("show");
@@ -182,7 +184,9 @@ function toggleMute() {
  * Applies the current mute settings to all game sounds and updates the mute icon.
  */
 function applyMuteSettings() {
-  [...Object.values(gameSounds), ...chickenDead].forEach(s => s.muted = isMuted);
+  if (typeof gameSounds !== 'undefined' && typeof chickenDead !== 'undefined') {
+    [...Object.values(gameSounds), ...chickenDead].forEach(s => s.muted = isMuted);
+  }
   
   if (ELEMENTS.muteIcon) {
     ELEMENTS.muteIcon.src = isMuted
