@@ -1,4 +1,11 @@
+/**
+ * End boss health status bar.
+ * @extends StatusBar
+ */
 class StatusBarEndbossHealth extends StatusBar {
+  /**
+   * Creates a new end boss health bar positioned on the right side.
+   */
   constructor() {
     const imgs = [
       "assets/img/7_statusbars/2_statusbar_endboss/green/green0.png",

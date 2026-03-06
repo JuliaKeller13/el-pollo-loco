@@ -1,0 +1,26 @@
+{
+    "source": {
+        "include": [
+            "./levels/level1.js",
+            "./models/background-objekt.class.js",
+            "./models/bottle.class.js",
+            "./models/character.class.js",
+            "./models/chicken-small.class.js",
+            "./models/chicken.class.js",
+            "./models/cloud.class.js",
+            "./models/coin.class.js",
+            "./models/drawable-object.class.js",
+            "./models/endboss.class.js",
+            "./models/keyboard.class.js",
+            "./models/level.class.js",
+            "./models/movable-object.class.js",
+            "./models/throwable-object.class.js",
+            "./models/world.class.js",
+            "./scripts/audio.js",
+            "./scripts/game.js"
+        ]
+    },
+    "opts": {
+        "destination": "./out"
+    }
+}

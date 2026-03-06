@@ -59,6 +59,7 @@
   border-radius: 12px;
   transition: transform 0.2s;
   font-family: "RyeCustom", "taco", Arial, Helvetica, sans-serif;
+  text-shadow: #000000c9 5px 0 20px;
 }
 
 .button:hover {
