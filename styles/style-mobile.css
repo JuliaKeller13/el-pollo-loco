@@ -16,20 +16,20 @@
 
 .control-group {
   display: flex;
-  gap: 15px;
+  gap: clamp(15px, 3vw, 25px);
   align-items: flex-end;
   flex-direction: row;
 }
 
 .mobile-button {
-  width: 60px;
-  height: 60px;
+  width: clamp(50px, 12vw, 60px);
+  height: clamp(50px, 12vw, 60px);
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.712);
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   color: white;
-  font-size: 18px;
+  font-size: clamp(16px, 3vw, 24px);
   cursor: pointer;
   user-select: none;
   pointer-events: auto;
@@ -52,8 +52,23 @@
 }
 
 .mobile-button img {
-  width: 40px;
-  height: 40px;
+  width: clamp(40px, 10vw, 45px);
+  height: clamp(40px, 10vw, 45px);
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.game-container:fullscreen .mobile-button {
+  width: clamp(70px, 15vw, 100px);
+  height: clamp(70px, 15vw, 100px);
+  font-size: clamp(20px, 4vw, 32px);
+}
+
+.game-container:fullscreen .mobile-button img {
+  width: clamp(60px, 12vw, 80px);
+  height: clamp(60px, 12vw, 80px);
+}
+
+.game-container:fullscreen .control-group {
+  gap: clamp(20px, 5vw, 40px);
 }
