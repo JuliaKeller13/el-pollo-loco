@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: flex-end;
   pointer-events: none;
-  padding: clamp(6px, 1.5%, 15px);
+  padding: clamp(5px, 1%, 10px);
   box-sizing: border-box;
   z-index: 1;
 }
@@ -22,14 +22,12 @@
 }
 
 .mobile-button {
-  width: clamp(50px, 12vw, 60px);
-  height: clamp(50px, 12vw, 60px);
+  width: clamp(40px, 12vw, 45px);
+  height: clamp(40px, 12vw, 45px);
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.712);
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  color: white;
-  font-size: clamp(16px, 3vw, 24px);
   cursor: pointer;
   user-select: none;
   pointer-events: auto;
@@ -52,23 +50,22 @@
 }
 
 .mobile-button img {
-  width: clamp(40px, 10vw, 45px);
-  height: clamp(40px, 10vw, 45px);
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .game-container:fullscreen .mobile-button {
-  width: clamp(70px, 15vw, 100px);
-  height: clamp(70px, 15vw, 100px);
-  font-size: clamp(20px, 4vw, 32px);
+  width: clamp(40px, 8vw, 100px);
+  height: clamp(40px, 8vw, 100px);
 }
 
 .game-container:fullscreen .mobile-button img {
-  width: clamp(60px, 12vw, 80px);
-  height: clamp(60px, 12vw, 80px);
+  width: clamp(40px, 7vw, 80px);
+  height: clamp(40px, 7vw, 80px);
 }
 
 .game-container:fullscreen .control-group {
-  gap: clamp(20px, 5vw, 40px);
+  gap: clamp(20px, 3vw, 40px);
 }
