@@ -53,8 +53,6 @@ class AssetLoader {
     this.startTime = Date.now();
     this.showLoadingScreen();
     this.updateProgress();
-
-    // Create promises for all image loads
     const loadPromises = this.assets.map(path => this.loadImage(path));
 
     try {
@@ -63,9 +61,8 @@ class AssetLoader {
       console.error('Asset loading error:', error);
     }
 
-    // Keep loading screen visible for minimum duration
     const elapsed = Date.now() - this.startTime;
-    const minDuration = 1000; // Minimum 1 second
+    const minDuration = 1000;
     if (elapsed < minDuration) {
       await new Promise(resolve => setTimeout(resolve, minDuration - elapsed));
     }
@@ -75,7 +72,7 @@ class AssetLoader {
 
   /**
    * Loads a single image
-   * @param {string} path - Path to image
+   * @param {string} path
    * @returns {Promise<void>}
    */
   loadImage(path) {
@@ -99,7 +96,7 @@ class AssetLoader {
         console.warn(`Failed to load asset: ${path}`);
         this.loadedAssets++;
         this.updateProgress();
-        resolve(); // Don't reject, continue loading other assets
+        resolve();
       };
       img.src = path;
     });
