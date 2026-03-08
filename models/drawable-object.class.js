@@ -25,6 +25,14 @@ class DrawableObject {
    * @param {string} path - Path to the image file.
    */
   loadImage(path) {
+    if (typeof getPreloadedImage === "function") {
+      const preloaded = getPreloadedImage(path);
+      if (preloaded) {
+        this.img = preloaded;
+        return;
+      }
+    }
+
     this.img = new Image();
     this.img.src = path;
   }
@@ -36,6 +44,14 @@ class DrawableObject {
    */
   loadImages(array) {
     array.forEach((path) => {
+      if (typeof getPreloadedImage === "function") {
+        const preloaded = getPreloadedImage(path);
+        if (preloaded) {
+          this.imageCache[path] = preloaded;
+          return;
+        }
+      }
+
       let img = new Image();
       img.src = path;
       this.imageCache[path] = img;

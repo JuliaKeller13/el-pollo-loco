@@ -13,6 +13,11 @@
       <section class="game-container">
         <canvas id="canvas" width="800" height="480"></canvas>
 
+        <div id="loaderScreen" class="loader-screen" aria-live="polite" aria-hidden="true">
+          <div class="loader-spinner"></div>
+          <p id="loaderProgress" class="loader-progress">Loading... 0%</p>
+        </div>
+
         <div class="ingame-ui">
           <button
             onclick="toggleFullscreen()"
@@ -212,6 +217,7 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./levels/level1.js"></script>
+    <script src="./scripts/asset-loader.js"></script>
     <script src="./scripts/game.js"></script>
   </body>
 </html>

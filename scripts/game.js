@@ -9,7 +9,7 @@ let gameContainer;
 /** @type {boolean} Game over state flag */
 let gameOver = false;
 /** @type {boolean} Mute state retrieved from localStorage */
-let isMuted = localStorage.getItem('gameMuted') === 'true';
+let isMuted = localStorage.getItem("gameMuted") === "true";
 
 /**
  * Collection of DOM elements used throughout the game.
@@ -23,7 +23,7 @@ const ELEMENTS = {
   orientation: document.getElementById("orientationScreen"),
   status: document.getElementById("statusMessage"),
   muteIcon: document.getElementById("muteIcon"),
-  fullscreenBtn: document.getElementById("fullscreenButton")
+  fullscreenBtn: document.getElementById("fullscreenButton"),
 };
 
 /**
@@ -32,11 +32,11 @@ const ELEMENTS = {
  */
 const KEY_MAP = {
   " ": "SPACE",
-  "c": "C",
-  "ArrowLeft": "LEFT",
-  "ArrowRight": "RIGHT",
-  "ArrowUp": "UP",
-  "ArrowDown": "DOWN"
+  c: "C",
+  ArrowLeft: "LEFT",
+  ArrowRight: "RIGHT",
+  ArrowUp: "UP",
+  ArrowDown: "DOWN",
 };
 
 /**
@@ -59,7 +59,9 @@ function toggleFullscreen() {
   if (document.fullscreenElement === gameContainer) {
     // Exit fullscreen
     if (document.exitFullscreen) {
-      document.exitFullscreen().catch(err => console.log("Exit fullscreen error:", err));
+      document
+        .exitFullscreen()
+        .catch((err) => console.log("Exit fullscreen error:", err));
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     } else if (document.mozCancelFullScreen) {
@@ -69,13 +71,14 @@ function toggleFullscreen() {
     }
   } else {
     // Enter fullscreen with fallbacks
-    const fullscreenPromise = gameContainer.requestFullscreen?.() ||
-                              gameContainer.webkitRequestFullscreen?.() ||
-                              gameContainer.mozRequestFullScreen?.() ||
-                              gameContainer.msRequestFullscreen?.() ||
-                              Promise.reject(new Error("Fullscreen not supported"));
-    
-    fullscreenPromise.catch(err => {
+    const fullscreenPromise =
+      gameContainer.requestFullscreen?.() ||
+      gameContainer.webkitRequestFullscreen?.() ||
+      gameContainer.mozRequestFullScreen?.() ||
+      gameContainer.msRequestFullscreen?.() ||
+      Promise.reject(new Error("Fullscreen not supported"));
+
+    fullscreenPromise.catch((err) => {
       console.log("Fullscreen request failed:", err.message);
       // Fallback for devices that don't support fullscreen
       gameContainer.style.width = "100vw";
@@ -93,11 +96,12 @@ function toggleFullscreen() {
  */
 function updateFullscreenButton() {
   if (!ELEMENTS.fullscreenBtn) return;
-  const isFullscreen = document.fullscreenElement === gameContainer ||
-                       document.webkitFullscreenElement === gameContainer ||
-                       document.mozFullScreenElement === gameContainer ||
-                       document.msFullscreenElement === gameContainer;
-  
+  const isFullscreen =
+    document.fullscreenElement === gameContainer ||
+    document.webkitFullscreenElement === gameContainer ||
+    document.mozFullScreenElement === gameContainer ||
+    document.msFullscreenElement === gameContainer;
+
   ELEMENTS.fullscreenBtn.src = isFullscreen
     ? "./assets/img/fullscreenOff.png"
     : "./assets/img/fullscreen.png";
@@ -109,20 +113,31 @@ document.addEventListener("mozfullscreenchange", updateFullscreenButton);
 document.addEventListener("msfullscreenchange", updateFullscreenButton);
 
 /**
- * Starts the game by closing the start screen and initializing the game.
+ * Initializes the game by loading all assets, showing loading screen, then starting the game.
+ * This is called when user clicks START GAME button.
  */
-function startGame() {
-  ELEMENTS.start?.close();
-  const homeBtn = document.getElementById("homeButton");
-  homeBtn?.classList.remove("btn-hidden");
-  
-  // Show mobile controls on touch devices
-  const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
-  if (isTouch) {
-    document.querySelector(".mobile-controls")?.classList.add("show");
+async function startGame() {
+  try {
+    ELEMENTS.start?.close();
+    const homeBtn = document.getElementById("homeButton");
+    homeBtn?.classList.remove("btn-hidden");
+
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+      document.querySelector(".mobile-controls")?.classList.add("show");
+    }
+
+    canvas = document.getElementById("canvas");
+    const assetLoader = new AssetLoader();
+    assetLoader.collectAssets();
+    await assetLoader.preload();
+
+    initLevel();
+    init();
+  } catch (error) {
+    console.error("Error during game start:", error);
+    init();
   }
-  
-  init();
 }
 
 /**
@@ -132,11 +147,13 @@ function init() {
   canvas = document.getElementById("canvas");
   gameSounds.background.loop = true;
   gameSounds.background.currentTime = 0;
-  
+
   applyMuteSettings();
   playSound(gameSounds.gameStart);
   playQuietSound(gameSounds.background);
-  initLevel();
+  if (!level1) {
+    initLevel();
+  }
   world = new World(canvas, keyboard, level1);
 }
 
@@ -175,8 +192,8 @@ function closeImpressum() {
  */
 function toggleMute() {
   isMuted = !isMuted;
-  localStorage.setItem('gameMuted', isMuted);
-  
+  localStorage.setItem("gameMuted", isMuted);
+
   applyMuteSettings();
 }
 
@@ -184,10 +201,12 @@ function toggleMute() {
  * Applies the current mute settings to all game sounds and updates the mute icon.
  */
 function applyMuteSettings() {
-  if (typeof gameSounds !== 'undefined' && typeof chickenDead !== 'undefined') {
-    [...Object.values(gameSounds), ...chickenDead].forEach(s => s.muted = isMuted);
+  if (typeof gameSounds !== "undefined" && typeof chickenDead !== "undefined") {
+    [...Object.values(gameSounds), ...chickenDead].forEach(
+      (s) => (s.muted = isMuted),
+    );
   }
-  
+
   if (ELEMENTS.muteIcon) {
     ELEMENTS.muteIcon.src = isMuted
       ? "./assets/img/9_intro_outro_screens/mute.png"
@@ -205,7 +224,7 @@ function loseWinScreen(win) {
   gameOver = true;
   world.stopGame();
 
-  const config = win 
+  const config = win
     ? { sound: gameSounds.gameWin, img: "You Win A.png" }
     : { sound: gameSounds.gameOver, img: "Game over A.png" };
 
@@ -247,6 +266,7 @@ function setupRestartButton() {
 function restartGame() {
   gameOver = false;
   ELEMENTS.end.close();
+  initLevel();
   init();
 }
 
@@ -260,10 +280,9 @@ function quitGame() {
   gameOver = false;
   const homeBtn = document.getElementById("homeButton");
   homeBtn?.classList.add("btn-hidden");
-  
-  // Hide mobile controls
+
   document.querySelector(".mobile-controls")?.classList.remove("show");
-  
+
   ELEMENTS.end?.close();
   ELEMENTS.info?.close();
   ELEMENTS.start.show();
@@ -288,14 +307,20 @@ document.addEventListener("keyup", (e) => handleKeyEvent(e, false));
  * Initializes mobile touch controls if device supports touch input.
  */
 function initMobileControls() {
-  const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   if (!isTouch) return;
-  
+
   const bindTouch = (id, key) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.addEventListener("touchstart", (e) => { e.preventDefault(); keyboard[key] = true; });
-    el.addEventListener("touchend", (e) => { e.preventDefault(); keyboard[key] = false; });
+    el.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      keyboard[key] = true;
+    });
+    el.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      keyboard[key] = false;
+    });
   };
 
   bindTouch("btnLeft", "LEFT");
@@ -318,7 +343,7 @@ function checkOrientation() {
     window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
     navigator.maxTouchPoints > 0;
   const isPortrait = window.innerHeight > window.innerWidth;
-  
+
   if (isMobileDevice && isPortrait && ELEMENTS.orientation) {
     ELEMENTS.orientation.show();
     ELEMENTS.orientation.oncancel = (e) => e.preventDefault();
@@ -340,17 +365,17 @@ if (document.readyState === "loading") {
  * Toggles between German and English language in the info screen.
  */
 function toggleLanguage() {
-    let de = document.getElementById('content-de');
-    let en = document.getElementById('content-en');
-    let label = document.getElementById('langLabel');
+  let de = document.getElementById("content-de");
+  let en = document.getElementById("content-en");
+  let label = document.getElementById("langLabel");
 
-    if (de.classList.contains('d-none')) {
-        de.classList.remove('d-none');
-        en.classList.add('d-none');
-        label.innerText = "English";
-    } else {
-        de.classList.add('d-none');
-        en.classList.remove('d-none');
-        label.innerText = "Deutsch";
-    }
+  if (de.classList.contains("d-none")) {
+    de.classList.remove("d-none");
+    en.classList.add("d-none");
+    label.innerText = "English";
+  } else {
+    de.classList.add("d-none");
+    en.classList.remove("d-none");
+    label.innerText = "Deutsch";
+  }
 }
