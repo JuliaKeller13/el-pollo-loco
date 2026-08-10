@@ -31,23 +31,23 @@ This project was created to practice object-oriented programming, game logic, an
 
 ## ✨ Features
 
-* 🎮 Classic 2D Jump & Run gameplay
-* 🐔 Different enemy types
-* 👑 Endboss fight against El Pollo Loco
-* 🪙 Collectible coins
-* 🍾 Collectible salsa bottles
-* 💥 Throw bottles at enemies
-* 🦘 Jump on smaller enemies
-* ❤️ Health system
-* 📊 Status bars for health, coins, bottles and the endboss
-* 🔊 Sound effects and background music
-* 🔇 Mute / unmute functionality
-* 🖥️ Fullscreen mode
-* 📱 Touch controls for mobile devices
-* 🔄 Restart functionality
-* ⏳ Asset preloading with loading progress
-* 🌍 German and English game instructions
-* 📐 Responsive design
+* Classic 2D Jump & Run gameplay
+* Different enemy types
+* Endboss fight against El Pollo Loco
+* Collectible coins
+* Collectible salsa bottles
+* Throw bottles at enemies
+* Jump on smaller enemies
+* Health system
+* Status bars for health, coins, bottles and the endboss
+* Sound effects and background music
+* Mute / unmute functionality
+* Fullscreen mode
+* Touch controls for mobile devices
+* Restart functionality
+* Asset preloading with loading progress
+* German and English game instructions
+* Responsive design
 
 ---
 
