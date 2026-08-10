@@ -346,11 +346,14 @@ This project helped me practice and improve my knowledge of:
 
 ---
 
-## 👩‍💻 Author
+## ⚖️ License & Development
 
-**Julia Keller**
+This project was created independently by **Julia Keller** as part of the **Developer Akademie** training program.
 
-GitHub: [JuliaKeller13](https://github.com/JuliaKeller13)
+The project was developed for educational purposes during the training program.
+
+The rights to the source code and graphic assets belong to the **Developer Akademie**.
+tHub: [JuliaKeller13](https://github.com/JuliaKeller13)
 
 ---
 
